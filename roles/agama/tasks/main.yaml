@@ -1,0 +1,25 @@
+- name: Ensure agama user exists
+  ansible.builtin.user:
+    name: agama
+    state: present
+
+- name: Create /opt/agama dir
+  ansible.builtin.file:
+    path: /opt/agama
+    state: directory
+    owner: agama
+    group: agama
+
+- name: Install python flask and SQLAlchemy
+  ansible.builtin.apt:
+    name: python3-flask-sqlalchemy
+    state: present
+    update_cache: yes
+
+- name: Download the AGAMA app
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    dest: /opt/agama/agama.py
+    owner: agama
+    group: agama
+    mode: '0755'

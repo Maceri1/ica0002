@@ -3,29 +3,29 @@
 #- name: Ansible ping module
 #  ansible.builtin.ping:
 
-- name: Create user juri
-  ansible.builtin.user:
-    name: juri
-    state: present
-    create_home: yes
+#- name: Create user juri
+#  ansible.builtin.user:
+#    name: juri
+#    state: present
+#    create_home: yes
 
-- name: Create user roman
-  ansible.builtin.user:
-    name: roman
-    state: present
-    create_home: yes
+#- name: Create user roman
+#  ansible.builtin.user:
+#    name: roman
+#    state: present
+#    create_home: yes
 
-- name: Juri SSH
-  ansible.builtin.authorized_key:
-    user: juri
-    state: present
-    key: "{{ lookup('url', 'https://github.com/hudolejev.keys') }}"
+#- name: Juri SSH
+#  ansible.builtin.authorized_key:
+#    user: juri
+#    state: present
+#    key: "{{ lookup('url', 'https://github.com/hudolejev.keys') }}"
 
-- name: Roman SSH
-  ansible.builtin.authorized_key:
-    user: roman
-    state: present
-    key: "{{ lookup('url', 'https://github.com/romankuchin.keys') }}"
+#- name: Roman SSH
+#  ansible.builtin.authorized_key:
+#    user: roman
+#    state: present
+#    key: "{{ lookup('url', 'https://github.com/romankuchin.keys') }}"
     
 - name: Update APT cache
   ansible.builtin.apt:
