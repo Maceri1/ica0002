@@ -9,8 +9,7 @@
   ansible.builtin.copy:
     src: agama.ini
     dest: /etc/uwsgi/apps-enabled/agama.ini
-    owner: root
-    group: root
+    owner: agama
     mode: '0644'
   notify: Restart uWSGI
 

@@ -3,3 +3,16 @@
   ansible.builtin.apt:
     name: nginx
     state: present
+    
+- name: Copy Nginx configuration for uWSGI frontend
+  ansible.builtin.copy:
+    src: default
+    dest: /etc/nginx/sites-enabled/default
+    mode: '0644'
+  notify: Restart Nginx
+  
+- name: Ensure Nginx is started and enabled on boot
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
