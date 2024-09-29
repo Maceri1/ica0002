@@ -1,0 +1,38 @@
+---
+- name: Install MySQL server
+  apt:
+    name: mysql-server
+    state: present
+    update_cache: yes
+
+- name: Ensure MySQL service is running
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: Create MySQL override config to allow external connections
+  copy:
+    dest: /etc/mysql/mysql.conf.d/override.cnf
+    content: |
+      [mysqld]
+      bind-address = 0.0.0.0
+  notify: Restart MySQL
+
+- name: Install PyMySQL library
+  ansible.builtin.apt:
+    name: python3-pymysql
+    state: present
+
+- name: MySQL database
+  community.mysql.mysql_db:
+    name: "{{ mysql_database }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock  
+
+- name:
+  community.mysql.mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    host: "%"
+    priv: "{{ mysql_database }}.*:ALL"
+    login_unix_socket: /var/run/mysqld/mysqld.sock

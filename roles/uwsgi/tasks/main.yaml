@@ -4,13 +4,15 @@
       - uwsgi
       - uwsgi-plugin-python3
     state: present
+    update_cache: yes
 
 - name: Deploy uWSGI config for AGAMA
-  ansible.builtin.copy:
-    src: agama.ini
+  ansible.builtin.template:
+    src: agama.ini.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
     owner: agama
-    mode: '0644'
+    mode: '0600'
+  no_log: true   
   notify: Restart uWSGI
 
 - name: Ensure uWSGI service is running
@@ -18,3 +20,9 @@
     name: uwsgi
     state: started
     enabled: true
+
+- name: Restart uWSGI
+  ansible.builtin.service:
+    name: uwsgi
+    state: restarted
+  when: restart_uwsgi | default(false)
