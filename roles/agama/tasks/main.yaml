@@ -9,6 +9,7 @@
     state: directory
     owner: agama
     group: agama
+    mode: '0755'
 
 - name: Install Python packages for AGAMA
   ansible.builtin.apt:

@@ -1,0 +1,27 @@
+- name: Install Bind9
+  ansible.builtin.apt:
+    name: bind9
+    state: present
+    
+- name: Generate Bind9 config
+  ansible.builtin.template:
+    src: bind.{{ item }}.j2
+    dest: /etc/bind/named.conf.{{ item }}
+    mode: '0644'
+  loop:
+    - options
+    - local
+  notify: Restart Bind9
+  
+- name: Create master zone file
+  ansible.builtin.template:
+    src: db.{{ domain_name }}.j2
+    dest: /var/cache/bind/db.{{ domain_name }}
+    mode: '0644'
+  notify: Restart Bind9
+
+- name: Ensure Bind9 service is running
+  ansible.builtin.service:
+    name: bind9
+    state: started
+    enabled: true

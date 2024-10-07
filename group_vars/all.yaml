@@ -1,4 +1,4 @@
-mysql_host: 192.168.42.18
+mysql_host: Maceri1-2
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -9,3 +9,13 @@ mysql_password: !vault |
           3264616261616238380a333862333637666562613864303964343966396330646365653530383962
           38616463366235613530633534663464313530303039363139313563656535386137646361626262
           3131623539356334643130383935323931343563643737636564
+dns_forwarders:
+  - 1.1.1.1
+  - 8.8.8.8
+  - 9.9.9.9
+allowed_networks:
+  - 192.168.42.0/23
+  - 127.0.0.0/8
+domain_name: hannibal.io
+machine_1_name: Maceri1-1
+machine_2_name: Maceri1-2

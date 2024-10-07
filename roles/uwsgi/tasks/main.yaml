@@ -4,7 +4,6 @@
       - uwsgi
       - uwsgi-plugin-python3
     state: present
-    update_cache: yes
 
 - name: Deploy uWSGI config for AGAMA
   ansible.builtin.template:
@@ -20,9 +19,3 @@
     name: uwsgi
     state: started
     enabled: true
-
-- name: Restart uWSGI
-  ansible.builtin.service:
-    name: uwsgi
-    state: restarted
-  when: restart_uwsgi | default(false)

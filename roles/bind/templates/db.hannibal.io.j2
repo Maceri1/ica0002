@@ -1,0 +1,11 @@
+$TTL	604800
+{{ domain_name }}.	IN	SOA	ns.{{ domain_name }}. mail.{{ domain_name }}. (
+			      2		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+{{ domain_name }}.	IN	NS	{{ machine_1_name }}
+{{ machine_1_name }}	IN	A	{{ hostvars['Maceri1-1']['ansible_default_ipv4']['address'] }}
+{{ machine_2_name }}	IN	A	{{ hostvars['Maceri1-2']['ansible_default_ipv4']['address'] }}
