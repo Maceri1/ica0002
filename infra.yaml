@@ -3,13 +3,23 @@
   hosts: all
   roles:
     - init
-    - resolver
     
 - name: DNS servers
   hosts: dns_servers
   roles:
     - bind
+    
+- name: Resolver
+  hosts: all
+  roles: 
+    - resolver
 
+- name: Prometheus server
+  hosts: prometheus
+  roles:
+    - prometheus
+    - nginx
+    
 - name: Database server
   hosts: db_servers
   roles:
@@ -21,3 +31,4 @@
     - agama
     - uwsgi
     - nginx
+    

@@ -1,0 +1,24 @@
+- name: Install Prometheus
+  ansible.builtin.apt:
+    name: prometheus
+    state: present
+  
+- name: Configure Prometheus
+  ansible.builtin.template:
+    src: prometheus.yaml.j2
+    dest: /etc/prometheus/prometheus.yaml
+    mode: '0644'
+  notify: Restart Prometheus
+
+- name: Update Prometheus default configuration
+  ansible.builtin.template:
+    src: metric.yaml.j2
+    dest: /etc/default/prometheus
+    mode: '0644'
+  notify: Restart Prometheus
+
+- name: Ensure Prometheus is started and enabled
+  ansible.builtin.systemd:
+    name: prometheus
+    state: started
+    enabled: yes
