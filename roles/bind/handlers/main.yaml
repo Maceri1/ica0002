@@ -3,3 +3,8 @@
   ansible.builtin.service:
     name: bind9
     state: restarted
+
+- name: Restart Bind Exporter
+  ansible.builtin.systemd:
+    name: bind_exporter
+    state: restarted

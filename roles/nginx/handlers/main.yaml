@@ -4,7 +4,7 @@
     name: nginx
     state: restarted
 
-- name: Restart Prometheus
-  ansible.builtin.systemd:
-    name: prometheus-nginx-exporter
-    state: restarted
+#- name: Restart Prometheus
+ # ansible.builtin.systemd:
+  #  name: prometheus-nginx-exporter
+   # state: restarted

@@ -11,7 +11,9 @@
   loop:
     - options
     - local
-  notify: Restart Bind9
+  notify: 
+    - Restart Bind9
+    - Restart Bind Exporter
   
 - name: Create master zone file
   ansible.builtin.template:
@@ -25,3 +27,44 @@
     name: bind9
     state: started
     enabled: true
+
+- name: Download Bind9 exporter
+  ansible.builtin.get_url:
+    url: https://github.com/prometheus-community/bind_exporter/releases/download/v0.6.1/bind_exporter-0.6.1.linux-amd64.tar.gz
+    dest: /tmp/bind_exporter.tar.gz
+
+- name: Extract Bind9 exporter
+  ansible.builtin.unarchive:
+    src: /tmp/bind_exporter.tar.gz
+    dest: /usr/local/bin/
+    remote_src: yes
+    extra_opts: [ "--strip-components=1", "--wildcards", "--no-anchored", "bind_exporter" ]
+
+- name: Create Bind9 exporter systemd service file
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/bind_exporter.service
+    content: |
+      [Unit]
+      Description=Bind9 Exporter
+      Wants=network-online.target
+      After=network-online.target
+
+      [Service]
+      User=bind
+      Group=bind
+      Type=simple
+      ExecStart=/usr/local/bin/bind_exporter
+
+      [Install]
+      WantedBy=multi-user.target
+  notify: Restart Bind Exporter
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Ensure Bind9 exporter is started and enabled
+  ansible.builtin.systemd:
+    name: bind_exporter
+    state: started
+    enabled: yes

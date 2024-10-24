@@ -1,9 +1,7 @@
 ---
-- name: Install Nginx and Prometheus-nginx-exporter
+- name: Install Nginx
   ansible.builtin.apt:
-    name: 
-      - nginx
-      - prometheus-nginx-exporter
+    name: nginx
     state: present
 
 - name: Copy Nginx configuration for uWSGI frontend
@@ -11,15 +9,21 @@
     src: default.j2
     dest: /etc/nginx/sites-enabled/default
     mode: '0644'
-  notify: 
-    - Restart Nginx
-    - Restart Prometheus
+  notify: Restart Nginx
 
 - name: Ensure Nginx is started and enabled on boot
   ansible.builtin.service:
     name: nginx
     state: started
     enabled: yes
+
+- name: Flush handlers to ensure Nginx is restarted before installing the exporter
+  meta: flush_handlers
+
+- name: Install Nginx exporter
+  ansible.builtin.apt:
+    name: prometheus-nginx-exporter
+    state: present
 
 - name: Ensure Prometheus-nginx-exporter is started and enabled on boot
   ansible.builtin.service:

@@ -1,5 +1,5 @@
-Maceri1-1 ansible_host=193.40.156.67 ansible_port=39622 ansible_user=ubuntu
-Maceri1-2 ansible_host=193.40.156.67 ansible_port=36222 ansible_user=ubuntu
+Maceri1-1 ansible_host=193.40.156.67 ansible_port=40922 ansible_user=ubuntu
+Maceri1-2 ansible_host=193.40.156.67 ansible_port=26922 ansible_user=ubuntu
 
 [db_servers]
 Maceri1-2 
@@ -11,4 +11,7 @@ Maceri1-1
 Maceri1-2
 
 [prometheus]
+Maceri1-2
+
+[grafana]
 Maceri1-2

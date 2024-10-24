@@ -6,7 +6,7 @@
 - name: Configure Prometheus
   ansible.builtin.template:
     src: prometheus.yaml.j2
-    dest: /etc/prometheus/prometheus.yaml
+    dest: /etc/prometheus/prometheus.yml
     mode: '0644'
   notify: Restart Prometheus
 
@@ -14,7 +14,7 @@
   ansible.builtin.template:
     src: metric.yaml.j2
     dest: /etc/default/prometheus
-    mode: '0644'
+    mode: '0755'
   notify: Restart Prometheus
 
 - name: Ensure Prometheus is started and enabled

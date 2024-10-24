@@ -4,3 +4,7 @@
     name: mysql
     state: restarted
 
+- name: Restart MySQL Exporter
+  ansible.builtin.systemd:
+    name: prometheus-mysqld-exporter
+    state: restarted
