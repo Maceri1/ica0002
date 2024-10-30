@@ -32,20 +32,18 @@
     src: datasources.yaml.j2
     dest: /etc/grafana/provisioning/datasources/datasources.yaml
     mode: '0644'
+  notify: Restart Grafana
 
 - name: Copy Grafana dashboard
   ansible.builtin.copy:
     src: main.json
     dest: /etc/grafana/provisioning/dashboards/main.json
     mode: '0644'
+  notify: Restart Grafana
 
 - name: Configure Grafana dashboard provisioning
   ansible.builtin.template:
     src: dashboards.yaml.j2
     dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
     mode: '0644'
-
-- name: Restart Grafana
-  ansible.builtin.systemd:
-    name: grafana-server
-    state: restarted
+  notify: Restart Grafana

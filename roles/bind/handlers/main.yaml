@@ -6,5 +6,5 @@
 
 - name: Restart Bind Exporter
   ansible.builtin.systemd:
-    name: bind_exporter
+    name: prometheus-bind-exporter
     state: restarted
