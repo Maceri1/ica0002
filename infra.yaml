@@ -25,6 +25,11 @@
   roles:
     - mysql
 
+- name: InfluxDB server
+  hosts: influxdb
+  roles:
+    - influxdb
+
 - name: Web server
   hosts: web_servers
   roles:
@@ -36,3 +41,8 @@
   hosts: grafana
   roles:
     - grafana
+
+- name: Agama client
+  hosts: agama_clients
+  roles:
+    - agama_client

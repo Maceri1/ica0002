@@ -1,0 +1,18 @@
+- name: Restart InfluxDB
+  ansible.builtin.systemd:
+    name: influxdb
+    state: restarted
+
+- name: Restart Telegraf
+  ansible.builtin.systemd:
+    name: telegraf
+    state: restarted
+
+- name: Restart InfluxDB Stats Exporter
+  ansible.builtin.systemd:
+    name: prometheus-influxdb-stats-exporter
+    state: restarted
+
+- name: Restart Systemctl
+  ansible.builtin.systemd:
+    daemon_reload: yes

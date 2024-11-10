@@ -36,3 +36,10 @@
   ansible.builtin.apt:
     name: prometheus-node-exporter
     state: present
+
+- name: Configure rsyslog to send logs to Telegraf
+  ansible.builtin.copy:
+    src: rsyslog.conf
+    dest: /etc/rsyslog.d/50-telegraf.conf
+    mode: '0644'
+  notify: Restart Rsyslog

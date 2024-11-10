@@ -1,0 +1,75 @@
+- name: Ensure apt keyrings directory exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Add InfluxData GPG key
+  ansible.builtin.apt_key:
+    url: https://repos.influxdata.com/influxdata-archive_compat.key
+    state: present
+    keyring: /etc/apt/keyrings/influxdata-archive_compat.gpg
+
+- name: Add InfluxData repository
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/etc/apt/keyrings/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main'
+    state: present
+    filename: influxdata
+
+- name: Install InfluxDB
+  ansible.builtin.apt:
+    name: influxdb
+    state: present
+    update_cache: yes
+
+- name: Unmask and start InfluxDB service
+  ansible.builtin.systemd:
+    name: influxdb
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Install Telegraf
+  ansible.builtin.apt:
+    name: telegraf
+    state: present
+
+- name: Configure Telegraf for syslog input and influxdb output
+  ansible.builtin.template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+    mode: '0644'
+  notify: Restart Telegraf
+
+- name: Ensure Telegraf is running
+  ansible.builtin.systemd:
+    name: telegraf
+    state: started
+    enabled: yes
+
+- name: Install InfluxDB stat exporter from git
+  ansible.builtin.get_url:
+    url: https://github.com/carlpett/influxdb_stats_exporter/releases/download/v0.1.1/influx_stats_exporter_linux_amd64
+    dest: /usr/local/bin/influx_stats_exporter
+    mode: '0500'
+    owner: prometheus
+  notify: Restart InfluxDB Stats Exporter
+
+- name: Import Influxdb Stat Expo Template
+  ansible.builtin.template:
+    src: inf_stat_expo.service.j2
+    dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
+    mode: '0644'
+
+- name: Import Influxdb Conf Template
+  ansible.builtin.template:
+    src: influxdb.conf.j2
+    dest: /etc/influxdb/influxdb.conf
+    mode: '0644'
+  notify: Restart InfluxDB
+
+- name: Ensure InfluxDB stats exporter is running
+  ansible.builtin.systemd:
+    name: prometheus-influxdb-stats-exporter
+    state: started
+    enabled: true
