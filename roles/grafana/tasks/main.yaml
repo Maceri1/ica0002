@@ -14,6 +14,12 @@
     name: grafana
     state: present
 
+- name: Ensure Grafana is started and enabled on boot
+  ansible.builtin.service:
+    name: grafana-server
+    state: started
+    enabled: yes
+
 - name: Copy Grafana configuration
   ansible.builtin.template:
     src: grafana.ini.j2
@@ -21,16 +27,16 @@
     mode: '0644'
   notify: Restart Grafana
 
-- name: Ensure Grafana is started and enabled on boot
-  ansible.builtin.systemd:
-    name: grafana-server
-    state: started
-    enabled: yes
+- name: Grafana delete file upload
+  ansible.builtin.copy:
+    src: grafana_delete_script.sh
+    dest: /opt/grafana_delete_script.sh
+    mode: '0755'
 
 - name: Configure Grafana provisioning
   ansible.builtin.template:
-    src: datasources.yaml.j2
-    dest: /etc/grafana/provisioning/datasources/datasources.yaml
+    src: my_datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/my_datasources.yaml
     mode: '0644'
   notify: Restart Grafana
 
@@ -40,10 +46,52 @@
     dest: /etc/grafana/provisioning/dashboards/main.json
     mode: '0644'
   notify: Restart Grafana
-
+  
 - name: Configure Grafana dashboard provisioning
   ansible.builtin.template:
-    src: dashboards.yaml.j2
-    dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
+    src: my_dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/my_dashboards.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Configure influxdb datasource
+  ansible.builtin.template:
+    src: influx_agama_datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/influx_agama_datasource.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy InfluxDB Agama dashboard
+  ansible.builtin.template:
+    src: influx_agama_dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/influx_agama_dashboards.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy Influxdb agama dashboard
+  ansible.builtin.copy:
+    src: agama_client.json
+    dest: /etc/grafana/provisioning/dashboards/agama_client.json
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Configure rsyslog datasource
+  ansible.builtin.template:
+    src: influx_rsyslog_datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/influx_rsyslog_datasource.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy InfluxDB rsyslog dashboard
+  ansible.builtin.template:
+    src: influx_rsyslog_dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/influx_rsyslog_dashboards.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy Influxdb rsyslog dashboard
+  ansible.builtin.copy:
+    src: rsyslog.json
+    dest: /etc/grafana/provisioning/dashboards/rsyslog.json
     mode: '0644'
   notify: Restart Grafana

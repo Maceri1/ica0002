@@ -3,7 +3,6 @@
   ansible.builtin.apt:
     name: mysql-server
     state: present
-    update_cache: yes
 
 - name: Ensure MySQL service is running
   ansible.builtin.service:

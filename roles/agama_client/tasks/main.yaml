@@ -11,8 +11,8 @@
     create_home: yes
 
 - name: Place agama-client script
-  ansible.builtin.copy:
-    src: files/agama-client
+  ansible.builtin.template:
+    src: agama-client.j2
     dest: /usr/local/bin/agama-client
     mode: '0755'
 
@@ -23,23 +23,20 @@
     mode: '0755'
 
 - name: Place agama-client config
-  ansible.builtin.copy:
-    src: files/agama-client.conf
+  ansible.builtin.template:
+    src: agama-client.conf.j2
     dest: /etc/agama-client/agama-client.conf
     mode: '0644'
 
 - name: Create agama-client systemd service
-  ansible.builtin.copy:
-    src: files/agama-client.service
+  ansible.builtin.template:
+    src: agama-client.service.j2
     dest: /etc/systemd/system/agama-client.service
     mode: '0644'
-
-- name: Reload systemd daemon
-  ansible.builtin.systemd:
-    daemon_reload: yes
+  notify: Reload systemd
 
 - name: Ensure agama-client service is started and enabled
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: agama-client
     state: started
     enabled: yes

@@ -28,6 +28,13 @@ scrape_configs:
         - {{ host }}:9119
         {% endfor %}
 
+  - job_name: influx_stats_exporter
+    static_configs:
+      - targets: 
+        {% for host in groups['influxdb'] %}
+        - {{ host }}:9424
+        {% endfor %}
+
   - job_name: nginx
     static_configs:
       - targets: 

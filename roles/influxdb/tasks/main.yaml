@@ -1,20 +1,13 @@
-- name: Ensure apt keyrings directory exists
-  ansible.builtin.file:
-    path: /etc/apt/keyrings
-    state: directory
-    mode: '0755'
-
 - name: Add InfluxData GPG key
   ansible.builtin.apt_key:
     url: https://repos.influxdata.com/influxdata-archive_compat.key
     state: present
-    keyring: /etc/apt/keyrings/influxdata-archive_compat.gpg
+    keyring: /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg
 
 - name: Add InfluxData repository
   ansible.builtin.apt_repository:
-    repo: 'deb [signed-by=/etc/apt/keyrings/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main'
+    repo: 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main'
     state: present
-    filename: influxdata
 
 - name: Install InfluxDB
   ansible.builtin.apt:
@@ -22,12 +15,12 @@
     state: present
     update_cache: yes
 
-- name: Unmask and start InfluxDB service
-  ansible.builtin.systemd:
-    name: influxdb
-    state: started
-    enabled: yes
-    daemon_reload: yes
+# - name: Unmask and start InfluxDB service
+#   ansible.builtin.systemd:
+#     name: influxdb
+#     state: started
+#     enabled: yes
+#     daemon_reload: yes
 
 - name: Install Telegraf
   ansible.builtin.apt:
@@ -42,7 +35,7 @@
   notify: Restart Telegraf
 
 - name: Ensure Telegraf is running
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: telegraf
     state: started
     enabled: yes
@@ -51,15 +44,16 @@
   ansible.builtin.get_url:
     url: https://github.com/carlpett/influxdb_stats_exporter/releases/download/v0.1.1/influx_stats_exporter_linux_amd64
     dest: /usr/local/bin/influx_stats_exporter
-    mode: '0500'
+    mode: '0755'
     owner: prometheus
-  notify: Restart InfluxDB Stats Exporter
+
 
 - name: Import Influxdb Stat Expo Template
   ansible.builtin.template:
     src: inf_stat_expo.service.j2
     dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
     mode: '0644'
+  notify: Restart Systemctl
 
 - name: Import Influxdb Conf Template
   ansible.builtin.template:
@@ -68,8 +62,11 @@
     mode: '0644'
   notify: Restart InfluxDB
 
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
 - name: Ensure InfluxDB stats exporter is running
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: prometheus-influxdb-stats-exporter
     state: started
     enabled: true
