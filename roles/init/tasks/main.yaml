@@ -54,3 +54,19 @@
     dest: /etc/rsyslog.d/50-telegraf.conf
     mode: '0644'
   notify: Restart Rsyslog
+
+- name: Create backup user
+  ansible.builtin.user:
+    name: backup
+    home: /home/backup
+    shell: /bin/bash
+    state: present
+    generate_ssh_key: yes
+
+- name: Add backup server SSH key to known hosts
+  ansible.builtin.template:
+    src: backup_known_hosts.j2
+    dest: /home/backup/.ssh/known_hosts
+    owner: backup
+    group: backup
+    mode: '0644'

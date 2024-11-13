@@ -38,3 +38,5 @@ allowed_networks:
 domain_name: hannibal.io
 machine_1_name: Maceri1-1
 machine_2_name: Maceri1-2
+backup_server_ip: 192.168.42.132
+backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
