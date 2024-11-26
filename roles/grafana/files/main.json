@@ -683,7 +683,7 @@
     }
   ],
   "preload": false,
-  "refresh": "",
+  "refresh": "auto",
   "schemaVersion": 40,
   "tags": [],
   "templating": {

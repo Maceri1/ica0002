@@ -14,6 +14,10 @@ scrape_configs:
         - {{ host }}:9100
         {% endfor %}
 
+  - job_name: backup
+    static_configs:
+      - targets: ['backup.hannibal.io:9111']
+
   - job_name: mysql
     static_configs:
       - targets: 

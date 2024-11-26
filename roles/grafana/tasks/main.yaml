@@ -95,3 +95,17 @@
     dest: /etc/grafana/provisioning/dashboards/rsyslog.json
     mode: '0644'
   notify: Restart Grafana
+
+- name: Copy backup dashboard
+  ansible.builtin.template:
+    src: backup_dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/backup_dashboards.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy Backup Dashboard
+  ansible.builtin.copy:
+    src: backup.json
+    dest: /etc/grafana/provisioning/dashboards/backup.json
+    mode: '0644'
+  notify: Restart Grafana

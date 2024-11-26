@@ -9,11 +9,16 @@
     repo: 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main'
     state: present
 
-- name: Install InfluxDB
+- name: Install specific version of InfluxDB
   ansible.builtin.apt:
-    name: influxdb
+    name: influxdb=1.8.10-1
     state: present
-    update_cache: yes
+
+- name: Ensure InfluxDB service is started and enabled
+  ansible.builtin.systemd:
+    name: influxdb
+    state: started
+    enabled: yes
 
 # - name: Unmask and start InfluxDB service
 #   ansible.builtin.systemd:
@@ -70,3 +75,19 @@
     name: prometheus-influxdb-stats-exporter
     state: started
     enabled: true
+
+- name: Ensure /home/backup/influxdb directory is created
+  ansible.builtin.file:
+    path: /home/backup/influxdb
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0755'
+
+- name: Ensure /etc/cron.d/influxdb-backup file is created
+  ansible.builtin.template:
+    src: influxdb-backup.cron.j2
+    dest: /etc/cron.d/influxdb-backup
+    owner: root
+    group: root
+    mode: '0644'
