@@ -31,7 +31,23 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "DOWN"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "UP"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -50,15 +66,15 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 4,
+        "w": 7,
         "x": 0,
         "y": 0
       },
-      "id": 3,
+      "id": 7,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
+        "graphMode": "none",
+        "justifyMode": "center",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
@@ -76,13 +92,13 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "mysql_global_variables_server_id",
-          "legendFormat": "__auto",
+          "expr": "up{job=\"mysql\"}",
+          "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "MySQL Server ID",
+      "title": "MySQL status",
       "type": "stat"
     },
     {
@@ -148,8 +164,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 11,
-        "x": 4,
+        "w": 9,
+        "x": 7,
         "y": 0
       },
       "id": 2,
@@ -173,15 +189,75 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "rate(mysql_global_status_commands_total{command=\"select\"}[1m])",
+          "expr": "rate(mysql_global_status_questions{job=\"mysql\"}[1m]) * 60",
           "instant": false,
           "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "MySQL status + amount of selects per minute",
+      "title": "MySQL amount of selects per minute",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 6
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.3.1",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "mysql_global_variables_server_id",
+          "legendFormat": "{{instance}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "MySQL Server ID",
+      "type": "stat"
     },
     {
       "datasource": {
@@ -211,9 +287,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 0,
+        "h": 6,
+        "w": 6,
+        "x": 4,
         "y": 6
       },
       "id": 4,
@@ -308,9 +384,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 5,
-        "x": 8,
+        "h": 6,
+        "w": 4,
+        "x": 10,
         "y": 6
       },
       "id": 6,
@@ -331,7 +407,7 @@
         {
           "editorMode": "code",
           "expr": "mysql_slave_status_slave_sql_running",
-          "legendFormat": "__auto",
+          "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
@@ -400,9 +476,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 6,
         "w": 4,
-        "x": 13,
+        "x": 14,
         "y": 6
       },
       "id": 5,
@@ -423,7 +499,7 @@
         {
           "editorMode": "code",
           "expr": "mysql_slave_status_slave_io_running",
-          "legendFormat": "__auto",
+          "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }

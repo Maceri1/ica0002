@@ -27,14 +27,16 @@ grafana_password: !vault |
           3337643663333633660a326638346435643233336666353236623032636131383033316662376334
           63396431346531643530363366303630383332643639356530383030353161326437306231313336
           6132316634376166376466356232626434323631343939393033
-grafana_port: 3000
+grafana_port: 3001
 dns_forwarders:
   - 1.1.1.1
   - 8.8.8.8
   - 9.9.9.9
+
 allowed_networks:
   - 192.168.42.0/23
   - 127.0.0.0/8
+  - 172.17.0.0/16 # Docker network
 domain_name: hannibal.io
 machine_1_name: Maceri1-1
 machine_2_name: Maceri1-2
@@ -61,3 +63,4 @@ mysql_replication_password: !vault |
           3831383238313031633466363339393930633338393564383835
 node_id: "{{ (ansible_port / 100) | int }}"
 mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
+agama_port: 8001

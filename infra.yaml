@@ -35,8 +35,8 @@
 - name: Web server
   hosts: web_servers
   roles:
+    - docker
     - agama
-    - uwsgi
     - nginx
   tags:
     - mx
@@ -44,6 +44,7 @@
 - name: Grafana server
   hosts: grafana
   roles:
+    - docker
     - grafana
 
 - name: Agama client

@@ -1,0 +1,118 @@
+---
+- name: Add Grafana APT key
+  ansible.builtin.apt_key:
+    url: https://packages.grafana.com/gpg.key
+    state: present
+
+- name: Add Grafana APT repository
+  ansible.builtin.apt_repository:
+    repo: 'deb https://packages.grafana.com/oss/deb stable main'
+    state: present
+
+- name: Install Grafana
+  ansible.builtin.apt:
+    name: grafana
+    state: present
+
+- name: Ensure Grafana is started and enabled on boot
+  ansible.builtin.service:
+    name: grafana-server
+    state: started
+    enabled: yes
+
+- name: Copy Grafana configuration
+  ansible.builtin.template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Grafana delete file upload
+  ansible.builtin.copy:
+    src: grafana_delete_script.sh
+    dest: /opt/grafana_delete_script.sh
+    mode: '0755'
+
+- name: Configure Grafana provisioning
+  ansible.builtin.template:
+    src: my_datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/my_datasources.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy Grafana dashboard
+  ansible.builtin.copy:
+    src: main.json
+    dest: /etc/grafana/provisioning/dashboards/main.json
+    mode: '0644'
+  notify: Restart Grafana
+  
+- name: Configure Grafana dashboard provisioning
+  ansible.builtin.template:
+    src: my_dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/my_dashboards.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Configure influxdb datasource
+  ansible.builtin.template:
+    src: influx_agama_datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/influx_agama_datasource.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy InfluxDB Agama dashboard
+  ansible.builtin.template:
+    src: influx_agama_dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/influx_agama_dashboards.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy Influxdb agama dashboard
+  ansible.builtin.copy:
+    src: agama_client.json
+    dest: /etc/grafana/provisioning/dashboards/agama_client.json
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Configure rsyslog datasource
+  ansible.builtin.template:
+    src: influx_rsyslog_datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/influx_rsyslog_datasource.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy InfluxDB rsyslog dashboard
+  ansible.builtin.template:
+    src: influx_rsyslog_dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/influx_rsyslog_dashboards.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy Influxdb rsyslog dashboard
+  ansible.builtin.copy:
+    src: rsyslog.json
+    dest: /etc/grafana/provisioning/dashboards/rsyslog.json
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy backup dashboard
+  ansible.builtin.template:
+    src: backup_dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/backup_dashboards.yaml
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy Backup Dashboard
+  ansible.builtin.copy:
+    src: backup.json
+    dest: /etc/grafana/provisioning/dashboards/backup.json
+    mode: '0644'
+  notify: Restart Grafana
+
+- name: Copy MySQL Dashboard
+  ansible.builtin.copy:
+    src: roles/grafana/files/mysql.json
+    dest: /etc/grafana/provisioning/dashboards/mysql.json
+    mode: '0644'
+  notify: Restart Grafana

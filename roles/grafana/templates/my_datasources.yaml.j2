@@ -5,6 +5,26 @@ datasources:
     access: proxy
     orgId: 1
     uid: PBFA97CFB590B2093
-    url: http://localhost:9090/prometheus
+    url: http://{{ groups['prometheus'][0] }}:9090/prometheus
     editable: true
     isDefault: true
+
+  - name: InfluxDB-telegraf
+    type: influxdb
+    database: telegraf
+    access: proxy
+    orgId: 1
+    uid: ee3kgdjolo7b4f
+    url: http://{{ groups['influxdb'][0] }}:8086
+    editable: true
+    isDefault: false
+
+  - name: InfluxDB-agama
+    type: influxdb
+    database: agama_client_db
+    access: proxy
+    orgId: 1
+    uid: ce3k75bpwth4we
+    url: http://{{ groups['influxdb'][0] }}:8086
+    editable: true
+    isDefault: false
