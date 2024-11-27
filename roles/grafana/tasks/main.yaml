@@ -109,3 +109,10 @@
     dest: /etc/grafana/provisioning/dashboards/backup.json
     mode: '0644'
   notify: Restart Grafana
+
+- name: Copy MySQL Dashboard
+  ansible.builtin.copy:
+    src: roles/grafana/files/mysql.json
+    dest: /etc/grafana/provisioning/dashboards/mysql.json
+    mode: '0644'
+  notify: Restart Grafana

@@ -24,6 +24,8 @@
   hosts: db_servers
   roles:
     - mysql
+  tags:
+    - mx
 
 - name: InfluxDB server
   hosts: influxdb
@@ -36,6 +38,8 @@
     - agama
     - uwsgi
     - nginx
+  tags:
+    - mx
     
 - name: Grafana server
   hosts: grafana
