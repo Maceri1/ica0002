@@ -32,6 +32,16 @@
   roles:
     - influxdb
 
+- name: Keepalived
+  hosts: keepalived
+  roles: 
+    - keepalived
+  
+- name: Haproxy
+  hosts: haproxy
+  roles:
+    - haproxy
+
 - name: Web server
   hosts: web_servers
   roles:

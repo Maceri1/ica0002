@@ -45,3 +45,17 @@ scrape_configs:
         {% for host in groups['web_servers'] %}
         - {{ host }}:9113
         {% endfor %}
+
+  - job_name: keepalived
+    static_configs:
+      - targets:
+        {% for host in groups['keepalived'] -%}
+        - {{ host }}:9165
+        {% endfor %}
+
+  - job_name: haproxy
+    static_configs:
+      - targets:
+        {% for host in groups['haproxy'] -%}
+        - {{ host }}:9101
+        {% endfor %}
