@@ -27,12 +27,6 @@
     mode: '0644'
   notify: Restart Grafana
 
-- name: Grafana delete file upload
-  ansible.builtin.copy:
-    src: grafana_delete_script.sh
-    dest: /opt/grafana_delete_script.sh
-    mode: '0755'
-
 - name: Configure Grafana provisioning
   ansible.builtin.template:
     src: my_datasources.yaml.j2

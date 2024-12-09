@@ -22,3 +22,9 @@
     name: prometheus
     state: started
     enabled: yes
+
+- name: Assign Cnames for Prometheus
+  include_role:
+    name: "cname"
+  vars:
+    service: "prometheus"

@@ -56,3 +56,9 @@
     restart_policy: always
     published_ports: "{{ grafana_port }}:3000"
   notify: Restart Grafana container
+
+- name: Assign Cname to Grafana
+  include_role:
+    name: "cname"
+  vars:
+    service: "grafana"

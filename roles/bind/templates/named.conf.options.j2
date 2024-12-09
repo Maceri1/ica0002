@@ -1,0 +1,30 @@
+acl networks {
+    {% for ip in allowed_networks %}
+        {{ ip }};
+    {% endfor %}
+};
+
+options {
+    directory "/var/cache/bind";
+    forwarders {
+        {% for ip in dns_forwarders %}
+            {{ ip }};
+        {% endfor %}
+    };
+    dnssec-validation no;
+    allow-query { networks; };
+};
+
+statistics-channels {
+    inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};
+
+key "transfer.key" {
+    algorithm hmac-sha256;
+    secret "{{ transfer_key }}";
+};
+
+key "nsupdate.key" {
+    algorithm hmac-sha256;
+    secret "{{ nsupdate_key }}";
+};

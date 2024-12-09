@@ -2,10 +2,20 @@
   ansible.builtin.apt:
     name: bind9
     state: present
-    
+
+- name: Install pip
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+
+- name: Install dnspython library
+  ansible.builtin.pip:
+    name: dnspython
+    state: present
+
 - name: Generate Bind9 config
   ansible.builtin.template:
-    src: bind.{{ item }}.j2
+    src: named.conf.{{ item }}.j2
     dest: /etc/bind/named.conf.{{ item }}
     mode: '0644'
   loop:
@@ -20,6 +30,15 @@
     src: db.{{ domain_name }}.j2
     dest: /var/cache/bind/db.{{ domain_name }}
     mode: '0644'
+  when: inventory_hostname in groups['dns_primary']
+  notify: Restart Bind9
+
+- name: Reverse template zone
+  ansible.builtin.template:
+    src: db.rev.j2
+    dest: /var/cache/bind/rev.db.{{ domain_name }}
+    force: yes
+  when: inventory_hostname in groups ['dns_primary']
   notify: Restart Bind9
 
 - name: Ensure Bind9 service is running
@@ -27,6 +46,19 @@
     name: bind9
     state: started
     enabled: true
+
+- name: Add A backup record on primary DNS server
+  community.general.nsupdate:
+    key_algorithm: hmac-sha256
+    key_name: "nsupdate.key"
+    key_secret: "{{ nsupdate_key }}"
+    record: "backup.{{ domain_name }}"
+    server: "{{ hostvars[groups['dns_primary'][0]].ansible_default_ipv4.address }}"
+    state: present
+    type: A
+    zone: "{{ domain_name }}"
+    value: "{{ backup_server_ip }}"
+  when: inventory_hostname in groups['dns_primary']
 
 - name: Extract Bind9 exporter
   ansible.builtin.unarchive:
@@ -69,3 +101,9 @@
     name: prometheus-bind-exporter
     state: started
     enabled: true
+
+- name: Assign Cnames to Bind9
+  include_role:
+    name: "cname"
+  vars:
+    service: "ns-{{inventory_hostname | replace('Maceri1-','')}}"

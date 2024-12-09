@@ -131,3 +131,9 @@
   notify:
     - Reset MySQL source
     - Reset MySQL replica
+
+- name: Assign Cnames to MySQL
+  include_role:
+    name: "cname"
+  vars:
+    service: "db-{{inventory_hostname | replace('Maceri1-','')}}"

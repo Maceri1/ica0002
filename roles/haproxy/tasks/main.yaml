@@ -33,3 +33,9 @@
     name: prometheus-haproxy-exporter
     state: started
     enabled: true
+
+- name: Assign Cname for Haproxy
+  include_role:
+    name: "cname"
+  vars:
+    service: "lb-{{inventory_hostname | replace('Maceri1-','')}}"

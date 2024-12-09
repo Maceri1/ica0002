@@ -91,3 +91,9 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Assign Cnames to InfluxDB
+  include_role:
+    name: "cname"
+  vars:
+    service: "influxdb"
