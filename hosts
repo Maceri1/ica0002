@@ -1,9 +1,10 @@
 Maceri1-1 ansible_host=193.40.156.67 ansible_port=36322 ansible_user=ubuntu
 Maceri1-2 ansible_host=193.40.156.67 ansible_port=27722 ansible_user=ubuntu
+Maceri1-3 ansible_host=193.40.156.67 ansible_port=41022 ansible_user=ubuntu
 
 [db_servers]
-Maceri1-2
 Maceri1-1
+Maceri1-2
 
 [web_servers]
 Maceri1-1 
@@ -22,19 +23,20 @@ dns_primary
 dns_secondary
 
 [dns_primary]
-Maceri1-1
+Maceri1-3
 
 [dns_secondary]
+Maceri1-1
 Maceri1-2
 
 [prometheus]
-Maceri1-2
+Maceri1-3
 
 [grafana]
-Maceri1-2
+Maceri1-3
 
 [influxdb]
-Maceri1-2
+Maceri1-3
 
 [agama_clients]
-Maceri1-2
+Maceri1-3

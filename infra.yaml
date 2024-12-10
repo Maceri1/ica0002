@@ -55,6 +55,7 @@
   hosts: grafana
   roles:
     - docker
+    - nginx
     - grafana
 
 - name: Agama client
