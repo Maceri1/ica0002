@@ -15,9 +15,9 @@ Services that are backed up:
 
 ## Schedule
 
-MySQL backups are created every day at 02:00; it takes up to 30 minutes to create and store the backup.
+MySQL backups are created every day at 20:00UTC; it takes up to 30 minutes to create and store the backup.
 
-InfluxDB backups are created every day at 03:00; it takes up to 30 minutes to create and store the backup.
+InfluxDB backups are created every day at 20:30UTC; it takes up to 30 minutes to create and store the backup.
 
 Ansible Git repository backups are created every hour; it takes up to 5 minutes to create and store the backup.
 
