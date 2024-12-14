@@ -40,5 +40,5 @@ And then, the final command that will apply the backup:
 Verify that the backups are up and running and run the ansible-playbook to get telegraf service running again
 ```ansible-playbook infra.yaml```
 
-### Final words
+## Final words
 By following these instructions, you will be able to restore MySQL and InfluxDB databases from backups. Ensure that you have the necessary permissions and access to the servers before starting the restoration process. If you encounter any issues, refer to the logs and verify the steps to troubleshoot the problem.

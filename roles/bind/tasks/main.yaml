@@ -14,6 +14,7 @@
   notify: 
     - Restart Bind9
     - Restart Bind Exporter
+  no_log: true
   
 - name: Create master zone file
   ansible.builtin.template:
@@ -31,29 +32,10 @@
   when: inventory_hostname in groups ['dns_primary']
   notify: Restart Bind9
 
-- name: Ensure Bind9 service is running
-  ansible.builtin.service:
-    name: bind9
-    state: started
-    enabled: true
-
 - name: install dependency for nsupdate
   ansible.builtin.apt:
     name: python3-dnspython
     state: present
-
-- name: Add A backup record on primary DNS server
-  community.general.nsupdate:
-    key_algorithm: hmac-sha256
-    key_name: "nsupdate.key"
-    key_secret: "{{ nsupdate_key }}"
-    record: "backup.{{ domain_name }}"
-    server: "{{ hostvars[groups['dns_primary'][0]].ansible_default_ipv4.address }}"
-    state: present
-    type: A
-    zone: "{{ domain_name }}"
-    value: "{{ backup_server_ip }}"
-  when: inventory_hostname in groups['dns_primary']
 
 - name: Extract Bind9 exporter
   ansible.builtin.unarchive:
@@ -96,6 +78,28 @@
     name: prometheus-bind-exporter
     state: started
     enabled: true
+
+- name: flush
+  ansible.builtin.meta: flush_handlers
+
+- name: Ensure Bind9 service is running
+  ansible.builtin.service:
+    name: bind9
+    state: started
+    enabled: true
+
+- name: Add A backup record on primary DNS server
+  community.general.nsupdate:
+    key_algorithm: hmac-sha256
+    key_name: "nsupdate.key"
+    key_secret: "{{ nsupdate_key }}"
+    record: "backup.{{ domain_name }}"
+    server: "{{ hostvars[groups['dns_primary'][0]].ansible_default_ipv4.address }}"
+    state: present
+    type: A
+    zone: "{{ domain_name }}"
+    value: "{{ backup_server_ip }}"
+  when: inventory_hostname in groups['dns_primary']
 
 - name: Assign Cnames to Bind9
   include_role:

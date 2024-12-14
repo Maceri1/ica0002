@@ -1,33 +1,41 @@
 zone "{{ domain_name }}" {
 {% if inventory_hostname in groups['dns_primary'] %}
     type primary;
-    file "/var/cache/bind/db.{{ domain_name }}";
-    allow-transfer { key "transfer.key"; };
-    allow-update { key "nsupdate.key"; };
+    allow-transfer {127.0.0.1;key transfer.key;};
+    allow-update {key nsupdate.key;};
 {% else %}
     type secondary;
-    file "/var/cache/bind/db.{{ domain_name }}";
-    masters { 
-{% for machine in groups['dns_primary'] %}
-        {{ hostvars[machine]['ansible_default_ipv4']['address'] }} key "transfer.key";
+    allow-transfer {127.0.0.1;};
+    primaries {
+{% for vm in groups['dns_primary'] %}
+        {{ hostvars[vm]['ansible_default_ipv4']['address'] }};
 {% endfor %}
     };
 {% endif %}
+    file "db.{{ domain_name }}";
 };
 
 zone "168.192.in-addr.arpa" {
 {% if inventory_hostname in groups['dns_primary'] %}
     type primary;
-    file "/var/cache/bind/rev.db.{{ domain_name }}";
-    allow-transfer { key "transfer.key"; };
-    allow-update { key "nsupdate.key"; };
+    allow-transfer {127.0.0.1;key transfer.key;};
+    allow-update {key nsupdate.key;};
 {% else %}
     type secondary;
-    file "/var/cache/bind/rev.db.{{ domain_name }}";
-    masters { 
-{% for machine in groups['dns_primary'] %}
-        {{ hostvars[machine]['ansible_default_ipv4']['address'] }} key "transfer.key";
+    allow-transfer {127.0.0.1;};
+    primaries {
+{% for vm in groups['dns_primary'] %}
+        {{ hostvars[vm]['ansible_default_ipv4']['address'] }};
 {% endfor %}
     };
 {% endif %}
+    file "rev.db.{{ domain_name }}";
 };
+
+{% if inventory_hostname in groups['dns_secondary'] %}
+{% for vm in groups['dns_primary'] %}
+server {{ hostvars[vm]['ansible_default_ipv4']['address'] }}{
+    keys { transfer.key; };
+};
+{% endfor %}
+{% endif %}
