@@ -15,21 +15,19 @@ Keep in the mind the variables that are in ```group_vars/all.yaml``` that contai
 ## 2. Restoration of MySQL
 ### 1. Restoring from the backup from the server
 To restore the backup from the server:
-Log into the backup user on the VM using ```sudo su - backup```
-and then run the command ```duplicity --no-encryption restore rsync://Maceri1@backup.hannibal.io//home/Maceri1 /home/backup/restore/ ```
+Log into the backup user on the 1st VM(or check the primary MySQL host in grafana) using ```sudo su - backup```
+and then run the command ```duplicity --no-encryption restore rsync://Maceri1@backup.hannibal.io/mysql /home/backup/restore/ ```
 
 To upload the backup to the server, use the commands as the root user
-```cd```
 ```mysql agama < /home/backup/restore/agama.sql```
 
 ## 3. Restoration of InfluxDB
 ### 1. Restoring backup from server
-Log in as backup user using ```sudo su - backup```
-and then run the command ```duplicity --no-encryption restore rsync://Maceri1@backup.hannibal.io//home/Maceri1 /home/backup/restore```
+Log in as backup user on the 3rd VM using ```sudo su - backup```
+and then run the command ```duplicity --no-encryption restore rsync://Maceri1@backup.hannibal.io/influxdb /home/backup/restore/```
 
 To restore the backup you shall delete existing Telegraf Database and Stop Telegraf Service.
 This must be done as root user.
-```cd```
 ```service telegraf stop```
 ```influx -execute 'DROP DATABASE telegraf'```
 

@@ -3,15 +3,21 @@
   hosts: all
   roles:
     - init
+  tags:
+    - init
     
 - name: DNS servers
   hosts: dns_servers
   roles:
     - bind
+  tags:
+    - dns
     
 - name: Resolver
   hosts: all
   roles: 
+    - resolver
+  tags: 
     - resolver
 
 - name: Prometheus server
@@ -19,6 +25,8 @@
   roles:
     - prometheus
     - nginx
+  tags:
+    - prometheus
     
 - name: Database server
   hosts: db_servers
@@ -31,15 +39,21 @@
   hosts: influxdb
   roles:
     - influxdb
+  tags:
+    - influxdb
 
 - name: Keepalived
   hosts: keepalived
   roles: 
     - keepalived
+  tags:
+    - keepalived
   
 - name: Haproxy
   hosts: haproxy
   roles:
+    - haproxy
+  tags:
     - haproxy
 
 - name: Web server
@@ -57,8 +71,12 @@
     - docker
     - nginx
     - grafana
+  tags:
+    - grafana
 
 - name: Agama client
   hosts: agama_clients
   roles:
+    - agama_client
+  tags:
     - agama_client

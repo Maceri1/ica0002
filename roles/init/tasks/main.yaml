@@ -37,6 +37,12 @@
     name: prometheus-node-exporter
     state: present
 
+- name: Ensure Node Exporter is running
+  ansible.builtin.service:
+    name: prometheus-node-exporter
+    state: started
+    enabled: yes
+
 - name: Install Rsyslog
   ansible.builtin.apt:
     name: rsyslog
