@@ -26,11 +26,6 @@
     src: backups.json
     dest: /opt/grafana/provisioning/dashboards/backup.json
 
-- name: Copy agama_client json
-  ansible.builtin.copy:
-    src: agama_client.json
-    dest: /opt/grafana/provisioning/dashboards/agama_client.json
-
 - name: Move template dashboards
   ansible.builtin.template:
     src: my_dashboards.yaml.j2
