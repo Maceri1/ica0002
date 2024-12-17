@@ -20,12 +20,12 @@
     state: started
     enabled: yes
 
-# - name: Unmask and start InfluxDB service
-#   ansible.builtin.systemd:
-#     name: influxdb
-#     state: started
-#     enabled: yes
-#     daemon_reload: yes
+- name: Unmask and start InfluxDB service
+  ansible.builtin.systemd:
+    name: influxdb
+    state: started
+    enabled: yes
+    daemon_reload: yes
 
 - name: Install Telegraf
   ansible.builtin.apt:

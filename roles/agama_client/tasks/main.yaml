@@ -15,6 +15,7 @@
     src: agama-client.j2
     dest: /usr/local/bin/agama-client
     mode: '0755'
+  notify: Restart agama-client
 
 - name: Create agama-client config directory
   ansible.builtin.file:
@@ -27,13 +28,16 @@
     src: agama-client.conf.j2
     dest: /etc/agama-client/agama-client.conf
     mode: '0644'
+  notify: Restart agama-client
 
 - name: Create agama-client systemd service
   ansible.builtin.template:
     src: agama-client.service.j2
     dest: /etc/systemd/system/agama-client.service
     mode: '0644'
-  notify: Reload systemd
+  notify:
+    - Reload systemd
+    - Restart agama-client
 
 - name: Ensure agama-client service is started and enabled
   ansible.builtin.service:
