@@ -40,8 +40,8 @@ frontend my_ha_frontend
 
 backend my_ha_backend
     {% for num in range(0, container_number) %}
-    server Maceri1-1-{{ num }} Maceri1-1:{{ 8001 + num }} check
-    server Maceri1-2-{{ num }} Maceri1-2:{{ 8001 + num }} check
+    server www-1-{{ num }} www-1:{{ 8001 + num }} check
+    server www-2-{{ num }} www-2:{{ 8001 + num }} check
     {% endfor %}
 
 listen stats

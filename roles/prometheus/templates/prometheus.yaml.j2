@@ -5,7 +5,7 @@ scrape_configs:
   - job_name: prometheus
     metrics_path: '/prometheus/metrics'
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['prometheus:9090']
 
   - job_name: linux
     static_configs:
@@ -22,40 +22,38 @@ scrape_configs:
     static_configs:
       - targets: 
         {% for host in groups['db_servers'] %}
-        - {{ host }}:9104
+        - {{ 'db-' + loop.index|string }}:9104
         {% endfor %}
 
   - job_name: bind
     static_configs:
       - targets: 
         {% for host in groups['dns_servers'] %}
-        - {{ host }}:9119
+        - {{ 'ns-' + loop.index|string }}:9119
         {% endfor %}
 
   - job_name: influx_stats_exporter
     static_configs:
       - targets: 
-        {% for host in groups['influxdb'] %}
-        - {{ host }}:9424
-        {% endfor %}
-
+        - influxdb:9424
+        
   - job_name: nginx
     static_configs:
       - targets: 
         {% for host in groups['web_servers'] %}
-        - {{ host }}:9113
+        - {{ 'www-' + loop.index|string }}:9113
         {% endfor %}
 
   - job_name: keepalived
     static_configs:
       - targets:
         {% for host in groups['keepalived'] -%}
-        - {{ host }}:9165
+        - {{ 'lb-' + loop.index|string }}:9165
         {% endfor %}
 
   - job_name: haproxy
     static_configs:
       - targets:
         {% for host in groups['haproxy'] -%}
-        - {{ host }}:9101
+        - {{ 'lb-' + loop.index|string }}:9101
         {% endfor %}

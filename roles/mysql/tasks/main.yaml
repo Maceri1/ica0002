@@ -10,13 +10,13 @@
     state: started
     enabled: yes
 
-- name: Create MySQL override config to allow external connections
-  ansible.builtin.copy:
-    dest: /etc/mysql/mysql.conf.d/override.cnf
-    content: |
-      [mysqld]
-      bind-address = 0.0.0.0
-  notify: Restart MySQL
+#- name: Create MySQL override config to allow external connections
+#  ansible.builtin.copy:
+#    dest: /etc/mysql/mysql.conf.d/override.cnf
+#    content: |
+#      [mysqld]
+#      bind-address = 0.0.0.0
+#  notify: Restart MySQL
 
 - name: Install PyMySQL library
   ansible.builtin.apt:
@@ -44,7 +44,6 @@
   community.mysql.mysql_user:
     name: "{{ mysql_exporter_user }}"
     password: "{{ mysql_exporter_password }}"
-    host: "%"
     priv: "*.*:PROCESS,REPLICATION CLIENT,SELECT"
     resource_limits:
       MAX_USER_CONNECTIONS: 3
