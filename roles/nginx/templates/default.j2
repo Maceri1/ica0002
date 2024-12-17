@@ -16,7 +16,7 @@ server {
 
     {% if inventory_hostname in groups['prometheus'] %}
     location /prometheus {
-        proxy_pass http://{{ groups['prometheus'][0] }}:9090/prometheus;
+        proxy_pass http://localhost:9090/prometheus;
     }
     {% endif %}
 

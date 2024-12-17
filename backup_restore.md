@@ -18,7 +18,7 @@ To restore the backup from the server:
 Log into the backup user on the 1st VM(or check the primary MySQL host in grafana) using ```sudo su - backup```
 and then run the command ```duplicity --no-encryption restore rsync://Maceri1@backup.hannibal.io/mysql /home/backup/restore/ ```
 
-To upload the backup to the server, use the commands as the root user
+To upload the backup to the server, use the commands as the root user(```sudo -i```) and press enter, and then run this command
 ```mysql agama < /home/backup/restore/agama.sql```
 
 ## 3. Restoration of InfluxDB
@@ -27,7 +27,7 @@ Log in as backup user on the 3rd VM using ```sudo su - backup```
 and then run the command ```duplicity --no-encryption restore rsync://Maceri1@backup.hannibal.io/influxdb /home/backup/restore/```
 
 To restore the backup you shall delete existing Telegraf Database and Stop Telegraf Service.
-This must be done as root user.
+This must be done as root user(```sudo -i```).
 ```service telegraf stop```
 ```influx -execute 'DROP DATABASE telegraf'```
 

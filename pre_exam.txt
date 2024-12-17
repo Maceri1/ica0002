@@ -1,4 +1,4 @@
-Tue Dec 17 05:45:32 EET 2024
+Tue Dec 17 09:08:44 EET 2024
 MatissLaptop
 
 PLAY [Initial setup] ***********************************************************
@@ -24,9 +24,9 @@ ok: [Maceri1-2]
 ok: [Maceri1-3]
 
 TASK [init : Update APT cache] *************************************************
-changed: [Maceri1-1]
 changed: [Maceri1-2]
 changed: [Maceri1-3]
+changed: [Maceri1-1]
 
 TASK [init : Install Prometheus Node Exporter] *********************************
 The following additional packages will be installed:
@@ -39,17 +39,6 @@ The following NEW packages will be installed:
   moreutils prometheus-node-exporter prometheus-node-exporter-collectors
   smartmontools
 0 upgraded, 8 newly installed, 0 to remove and 132 not upgraded.
-changed: [Maceri1-3]
-The following additional packages will be installed:
-  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
-  moreutils prometheus-node-exporter-collectors smartmontools
-Suggested packages:
-  gsmartcontrol smart-notifier mailx | mailutils
-The following NEW packages will be installed:
-  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
-  moreutils prometheus-node-exporter prometheus-node-exporter-collectors
-  smartmontools
-0 upgraded, 8 newly installed, 0 to remove and 132 not upgraded.
 changed: [Maceri1-2]
 The following additional packages will be installed:
   libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
@@ -62,41 +51,36 @@ The following NEW packages will be installed:
   smartmontools
 0 upgraded, 8 newly installed, 0 to remove and 132 not upgraded.
 changed: [Maceri1-1]
+The following additional packages will be installed:
+  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
+  moreutils prometheus-node-exporter-collectors smartmontools
+Suggested packages:
+  gsmartcontrol smart-notifier mailx | mailutils
+The following NEW packages will be installed:
+  libio-pty-perl libipc-run-perl libtime-duration-perl libtimedate-perl
+  moreutils prometheus-node-exporter prometheus-node-exporter-collectors
+  smartmontools
+0 upgraded, 8 newly installed, 0 to remove and 132 not upgraded.
+changed: [Maceri1-3]
 
 TASK [init : Ensure Node Exporter is running] **********************************
-ok: [Maceri1-2]
 ok: [Maceri1-3]
+ok: [Maceri1-2]
 ok: [Maceri1-1]
 
 TASK [init : Install Rsyslog] **************************************************
-ok: [Maceri1-1]
-ok: [Maceri1-3]
 ok: [Maceri1-2]
+ok: [Maceri1-3]
+ok: [Maceri1-1]
 
 TASK [init : Ensure that Rsyslog is running] ***********************************
+ok: [Maceri1-3]
 ok: [Maceri1-2]
 ok: [Maceri1-1]
-ok: [Maceri1-3]
 
 TASK [init : Configure rsyslog to send logs to Telegraf] ***********************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp5lo8hiwl/rsyslog.conf.j2
-@@ -0,0 +1,10 @@
-+$ActionQueueType LinkedList # use asynchronous processing
-+$ActionQueueFileName srvrfwd # set file name, also enables disk mode
-+$ActionResumeRetryCount -1 # infinite retries on insert failure
-+$ActionQueueSaveOnShutdown on # save in-memory data if rsyslog shuts down
-+
-+# forward over tcp with octet framing according to RFC 5425
-+#*.* @@(o)127.0.0.1:6514;RSYSLOG_SyslogProtocol23Format
-+
-+# uncomment to use udp according to RFC 5424
-+*.* @influxdb:6514;RSYSLOG_SyslogProtocol23Format
-\ No newline at end of file
-
-changed: [Maceri1-2]
---- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp3ogwf__s/rsyslog.conf.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpomkfrqja/rsyslog.conf.j2
 @@ -0,0 +1,10 @@
 +$ActionQueueType LinkedList # use asynchronous processing
 +$ActionQueueFileName srvrfwd # set file name, also enables disk mode
@@ -112,7 +96,23 @@ changed: [Maceri1-2]
 
 changed: [Maceri1-3]
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpy7rhq4k7/rsyslog.conf.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmph6xtqk8_/rsyslog.conf.j2
+@@ -0,0 +1,10 @@
++$ActionQueueType LinkedList # use asynchronous processing
++$ActionQueueFileName srvrfwd # set file name, also enables disk mode
++$ActionResumeRetryCount -1 # infinite retries on insert failure
++$ActionQueueSaveOnShutdown on # save in-memory data if rsyslog shuts down
++
++# forward over tcp with octet framing according to RFC 5425
++#*.* @@(o)127.0.0.1:6514;RSYSLOG_SyslogProtocol23Format
++
++# uncomment to use udp according to RFC 5424
++*.* @influxdb:6514;RSYSLOG_SyslogProtocol23Format
+\ No newline at end of file
+
+changed: [Maceri1-2]
+--- before
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpq23v_hwu/rsyslog.conf.j2
 @@ -0,0 +1,10 @@
 +$ActionQueueType LinkedList # use asynchronous processing
 +$ActionQueueFileName srvrfwd # set file name, also enables disk mode
@@ -130,21 +130,12 @@ changed: [Maceri1-1]
 
 TASK [init : Create backup user] ***********************************************
 changed: [Maceri1-3]
-changed: [Maceri1-1]
 changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 TASK [init : Add backup server SSH key to known hosts] *************************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp2x95k2z2/backup_known_hosts.j2
-@@ -0,0 +1,3 @@
-+192.168.42.132 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
-+backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
-+backup.hannibal.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
-\ No newline at end of file
-
-changed: [Maceri1-1]
---- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpdpikuhq_/backup_known_hosts.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmprqq4rtrg/backup_known_hosts.j2
 @@ -0,0 +1,3 @@
 +192.168.42.132 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 +backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
@@ -153,7 +144,16 @@ changed: [Maceri1-1]
 
 changed: [Maceri1-3]
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmptyeu_p0r/backup_known_hosts.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp33ggqchj/backup_known_hosts.j2
+@@ -0,0 +1,3 @@
++192.168.42.132 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
++backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
++backup.hannibal.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
+\ No newline at end of file
+
+changed: [Maceri1-1]
+--- before
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpjnhuy01n/backup_known_hosts.j2
 @@ -0,0 +1,3 @@
 +192.168.42.132 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 +backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
@@ -252,8 +252,8 @@ changed: [Maceri1-3]
 PLAY [DNS servers] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-3]
+ok: [Maceri1-2]
 ok: [Maceri1-1]
 
 TASK [bind : Install Bind9] ****************************************************
@@ -266,7 +266,7 @@ The following NEW packages will be installed:
 The following packages will be upgraded:
   bind9-dnsutils bind9-host bind9-libs
 3 upgraded, 3 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-2]
+changed: [Maceri1-3]
 The following additional packages will be installed:
   bind9-dnsutils bind9-host bind9-libs bind9-utils dns-root-data
 Suggested packages:
@@ -276,7 +276,7 @@ The following NEW packages will be installed:
 The following packages will be upgraded:
   bind9-dnsutils bind9-host bind9-libs
 3 upgraded, 3 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-3]
+changed: [Maceri1-2]
 The following additional packages will be installed:
   bind9-dnsutils bind9-host bind9-libs bind9-utils dns-root-data
 Suggested packages:
@@ -303,7 +303,7 @@ TASK [bind : Create master zone file] ******************************************
 skipping: [Maceri1-1]
 skipping: [Maceri1-2]
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp8sf5_6dp/db.hannibal.io.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp7ekzh6wl/db.hannibal.io.j2
 @@ -0,0 +1,15 @@
 +$TTL	604800
 +hannibal.io.	IN	SOA	ns.hannibal.io. mail.hannibal.io. (
@@ -316,9 +316,9 @@ skipping: [Maceri1-2]
 +hannibal.io. IN NS Maceri1-3
 +hannibal.io. IN NS Maceri1-1
 +hannibal.io. IN NS Maceri1-2
-+Maceri1-1 IN A 192.168.42.100
-+Maceri1-2 IN A 192.168.42.113
-+Maceri1-3 IN A 192.168.42.194
++Maceri1-1 IN A 192.168.42.76
++Maceri1-2 IN A 192.168.42.155
++Maceri1-3 IN A 192.168.42.68
 +backup IN  A 192.168.42.132
 
 changed: [Maceri1-3]
@@ -327,7 +327,7 @@ TASK [bind : Reverse template zone] ********************************************
 skipping: [Maceri1-1]
 skipping: [Maceri1-2]
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp8anj_0dk/db.rev.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmprsa53a_b/db.rev.j2
 @@ -0,0 +1,15 @@
 +$TTL    604800
 +168.192.in-addr.arpa.    IN    SOA    hannibal.io. Maceri1.hannibal.io. (
@@ -341,9 +341,9 @@ skipping: [Maceri1-2]
 +168.192.in-addr.arpa. IN   NS  Maceri1-1.hannibal.io.
 +168.192.in-addr.arpa. IN   NS  Maceri1-2.hannibal.io.
 +; PTR Records
-+100.42 IN PTR Maceri1-1.hannibal.io.
-+113.42 IN PTR Maceri1-2.hannibal.io.
-+194.42 IN PTR Maceri1-3.hannibal.io.
++76.42 IN PTR Maceri1-1.hannibal.io.
++155.42 IN PTR Maceri1-2.hannibal.io.
++68.42 IN PTR Maceri1-3.hannibal.io.
 
 changed: [Maceri1-3]
 
@@ -363,7 +363,7 @@ Suggested packages:
 The following NEW packages will be installed:
   python3-dnspython python3-requests-toolbelt
 0 upgraded, 2 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-1]
+changed: [Maceri1-2]
 The following additional packages will be installed:
   python3-requests-toolbelt
 Suggested packages:
@@ -371,12 +371,12 @@ Suggested packages:
 The following NEW packages will be installed:
   python3-dnspython python3-requests-toolbelt
 0 upgraded, 2 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 TASK [bind : Extract Bind9 exporter] *******************************************
 changed: [Maceri1-2]
-changed: [Maceri1-1]
 changed: [Maceri1-3]
+changed: [Maceri1-1]
 
 TASK [bind : Create symlink to Bind9 exporter executable] **********************
 --- before
@@ -388,16 +388,6 @@ TASK [bind : Create symlink to Bind9 exporter executable] **********************
 +    "state": "link"
  }
 
-changed: [Maceri1-2]
---- before
-+++ after
-@@ -1,4 +1,4 @@
- {
-     "path": "/usr/local/bin/prometheus-bind-exporter",
--    "state": "absent"
-+    "state": "link"
- }
-
 changed: [Maceri1-3]
 --- before
 +++ after
@@ -409,6 +399,16 @@ changed: [Maceri1-3]
  }
 
 changed: [Maceri1-1]
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/usr/local/bin/prometheus-bind-exporter",
+-    "state": "absent"
++    "state": "link"
+ }
+
+changed: [Maceri1-2]
 
 TASK [bind : Create Bind9 exporter systemd service file] ***********************
 --- before
@@ -428,24 +428,6 @@ TASK [bind : Create Bind9 exporter systemd service file] ***********************
 +[Install]
 +WantedBy=multi-user.target
 
-changed: [Maceri1-2]
---- before
-+++ after: /etc/systemd/system/prometheus-bind-exporter.service
-@@ -0,0 +1,13 @@
-+[Unit]
-+Description=Bind9 Exporter
-+Wants=network-online.target
-+After=network-online.target
-+
-+[Service]
-+User=bind
-+Group=bind
-+Type=simple
-+ExecStart=/usr/local/bin/prometheus-bind-exporter
-+
-+[Install]
-+WantedBy=multi-user.target
-
 changed: [Maceri1-3]
 --- before
 +++ after: /etc/systemd/system/prometheus-bind-exporter.service
@@ -465,16 +447,34 @@ changed: [Maceri1-3]
 +WantedBy=multi-user.target
 
 changed: [Maceri1-1]
+--- before
++++ after: /etc/systemd/system/prometheus-bind-exporter.service
+@@ -0,0 +1,13 @@
++[Unit]
++Description=Bind9 Exporter
++Wants=network-online.target
++After=network-online.target
++
++[Service]
++User=bind
++Group=bind
++Type=simple
++ExecStart=/usr/local/bin/prometheus-bind-exporter
++
++[Install]
++WantedBy=multi-user.target
+
+changed: [Maceri1-2]
 
 TASK [bind : Reload systemd daemon] ********************************************
-ok: [Maceri1-2]
-ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-3]
+ok: [Maceri1-2]
 
 TASK [bind : Ensure Bind9 exporter is started and enabled] *********************
 changed: [Maceri1-3]
-changed: [Maceri1-1]
 changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 TASK [bind : flush] ************************************************************
 
@@ -483,18 +483,18 @@ TASK [bind : flush] ************************************************************
 TASK [bind : flush] ************************************************************
 
 RUNNING HANDLER [bind : Restart Bind9] *****************************************
+changed: [Maceri1-1]
 changed: [Maceri1-2]
 changed: [Maceri1-3]
-changed: [Maceri1-1]
 
 RUNNING HANDLER [bind : Restart Bind Exporter] *********************************
-changed: [Maceri1-1]
 changed: [Maceri1-3]
+changed: [Maceri1-1]
 changed: [Maceri1-2]
 
 TASK [bind : Ensure Bind9 service is running] **********************************
-ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-3]
 ok: [Maceri1-2]
 
 TASK [bind : Add A backup record on primary DNS server] ************************
@@ -507,17 +507,19 @@ included: cname for Maceri1-3, Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
 changed: [Maceri1-3]
+changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 PLAY [Resolver] ****************************************************************
 
 TASK [Gathering Facts] *********************************************************
 ok: [Maceri1-3]
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [resolver : Update resolv.conf] *******************************************
 --- before: /etc/resolv.conf
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpk64ba_9u/resolv.conf.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp2_xxans8/resolv.conf.j2
 @@ -1,23 +1,3 @@
 -# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).
 -# Do not edit.
@@ -542,14 +544,46 @@ TASK [resolver : Update resolv.conf] *******************************************
 -nameserver 127.0.0.53
 -options edns0 trust-ad
 -search openstacklocal
-+nameserver 192.168.42.100
-+nameserver 192.168.42.113
++nameserver 192.168.42.76
++nameserver 192.168.42.155
++search hannibal.io
+\ No newline at end of file
+
+changed: [Maceri1-1]
+--- before: /etc/resolv.conf
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpowp1uljg/resolv.conf.j2
+@@ -1,23 +1,3 @@
+-# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).
+-# Do not edit.
+-#
+-# This file might be symlinked as /etc/resolv.conf. If you're looking at
+-# /etc/resolv.conf and seeing this text, you have followed the symlink.
+-#
+-# This is a dynamic resolv.conf file for connecting local clients to the
+-# internal DNS stub resolver of systemd-resolved. This file lists all
+-# configured search domains.
+-#
+-# Run "resolvectl status" to see details about the uplink DNS servers
+-# currently in use.
+-#
+-# Third party programs should typically not access this file directly, but only
+-# through the symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a
+-# different way, replace this symlink by a static file or a different symlink.
+-#
+-# See man:systemd-resolved.service(8) for details about the supported modes of
+-# operation for /etc/resolv.conf.
+-
+-nameserver 127.0.0.53
+-options edns0 trust-ad
+-search openstacklocal
++nameserver 192.168.42.76
++nameserver 192.168.42.155
 +search hannibal.io
 \ No newline at end of file
 
 changed: [Maceri1-3]
 --- before: /etc/resolv.conf
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpq1sdr499/resolv.conf.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpk21aa1ep/resolv.conf.j2
 @@ -1,23 +1,3 @@
 -# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).
 -# Do not edit.
@@ -574,49 +608,17 @@ changed: [Maceri1-3]
 -nameserver 127.0.0.53
 -options edns0 trust-ad
 -search openstacklocal
-+nameserver 192.168.42.100
-+nameserver 192.168.42.113
++nameserver 192.168.42.76
++nameserver 192.168.42.155
 +search hannibal.io
 \ No newline at end of file
 
 changed: [Maceri1-2]
---- before: /etc/resolv.conf
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp_kkmk18p/resolv.conf.j2
-@@ -1,23 +1,3 @@
--# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).
--# Do not edit.
--#
--# This file might be symlinked as /etc/resolv.conf. If you're looking at
--# /etc/resolv.conf and seeing this text, you have followed the symlink.
--#
--# This is a dynamic resolv.conf file for connecting local clients to the
--# internal DNS stub resolver of systemd-resolved. This file lists all
--# configured search domains.
--#
--# Run "resolvectl status" to see details about the uplink DNS servers
--# currently in use.
--#
--# Third party programs should typically not access this file directly, but only
--# through the symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a
--# different way, replace this symlink by a static file or a different symlink.
--#
--# See man:systemd-resolved.service(8) for details about the supported modes of
--# operation for /etc/resolv.conf.
--
--nameserver 127.0.0.53
--options edns0 trust-ad
--search openstacklocal
-+nameserver 192.168.42.100
-+nameserver 192.168.42.113
-+search hannibal.io
-\ No newline at end of file
-
-changed: [Maceri1-1]
 
 TASK [resolver : Systemd-resolved is shutdown] *********************************
-changed: [Maceri1-1]
-changed: [Maceri1-2]
 changed: [Maceri1-3]
+changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 PLAY [Prometheus server] *******************************************************
 
@@ -642,7 +644,7 @@ changed: [Maceri1-3]
 
 TASK [prometheus : Configure Prometheus] ***************************************
 --- before: /etc/prometheus/prometheus.yml
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpzq2986vv/prometheus.yaml.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpvcqt17_8/prometheus.yaml.j2
 @@ -1,44 +1,56 @@
 -# Sample config for Prometheus.
 +global:
@@ -744,7 +746,7 @@ changed: [Maceri1-3]
 
 TASK [prometheus : Update Prometheus default configuration] ********************
 --- before: /etc/default/prometheus
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpbsu5w5iq/metric.yaml.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp2x8y36ao/metric.yaml.j2
 @@ -1,110 +1 @@
 -# Set the command-line arguments to pass to the server.
 -# Due to shell escaping, to pass backslashes for regexes, you need to double
@@ -856,7 +858,7 @@ TASK [prometheus : Update Prometheus default configuration] ********************
 -#    --web.external-url.
 -#  --web.user-assets=<path>
 -#    Path to user asset directory, available at /user.
-+ARGS='--web.external-url=http://maceri1-1:10080/prometheus'
++ARGS='--web.external-url=http://maceri1-1:7680/prometheus'
 
 changed: [Maceri1-3]
 
@@ -889,7 +891,7 @@ changed: [Maceri1-3]
 
 TASK [nginx : Copy Nginx configuration for uWSGI frontend] *********************
 --- before: /etc/nginx/sites-enabled/default
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpbt10wpwa/default.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp737yvp8z/default.j2
 @@ -1,91 +1,24 @@
 -##
 -# You should look at the following URL's in order to grasp a solid understanding
@@ -1055,7 +1057,7 @@ The following NEW packages will be installed:
   mecab-ipadic-utf8 mecab-utils mysql-client-8.0 mysql-client-core-8.0
   mysql-common mysql-server mysql-server-8.0 mysql-server-core-8.0
 0 upgraded, 27 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-1]
+changed: [Maceri1-2]
 The following additional packages will be installed:
   libcgi-fast-perl libcgi-pm-perl libclone-perl libencode-locale-perl
   libevent-pthreads-2.1-7 libfcgi-bin libfcgi-perl libfcgi0ldbl
@@ -1076,11 +1078,11 @@ The following NEW packages will be installed:
   mecab-ipadic-utf8 mecab-utils mysql-client-8.0 mysql-client-core-8.0
   mysql-common mysql-server mysql-server-8.0 mysql-server-core-8.0
 0 upgraded, 27 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 TASK [mysql : Ensure MySQL service is running] *********************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Create MySQL override config to allow external connections] ******
 --- before
@@ -1113,16 +1115,16 @@ The following NEW packages will be installed:
 changed: [Maceri1-2]
 
 TASK [mysql : MySQL database] **************************************************
-changed: [Maceri1-2]
 changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 TASK [mysql : Create MySQL user] ***********************************************
 changed: [Maceri1-1]
 changed: [Maceri1-2]
 
 TASK [mysql : Create MySQL exporter system user] *******************************
-changed: [Maceri1-1]
 changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 TASK [mysql : Create .my.cnf for MySQL exporter] *******************************
 changed: [Maceri1-1]
@@ -1132,23 +1134,23 @@ TASK [mysql : Install MySQL exporter] ******************************************
 The following NEW packages will be installed:
   prometheus-mysqld-exporter
 0 upgraded, 1 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-2]
+changed: [Maceri1-1]
 The following NEW packages will be installed:
   prometheus-mysqld-exporter
 0 upgraded, 1 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 TASK [mysql : Flush handlers to ensure MySQL is restarted before starting the exporter] ***
 
 TASK [mysql : Flush handlers to ensure MySQL is restarted before starting the exporter] ***
 
 RUNNING HANDLER [mysql : Restart MySQL] ****************************************
-changed: [Maceri1-1]
 changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 RUNNING HANDLER [mysql : Restart MySQL Exporter] *******************************
-changed: [Maceri1-1]
 changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 RUNNING HANDLER [mysql : Reset MySQL source] ***********************************
 skipping: [Maceri1-2] => (item=stopreplica) 
@@ -1212,18 +1214,18 @@ changed: [Maceri1-2]
 changed: [Maceri1-1]
 
 TASK [mysql : Create MySQL client configuration file for backup user] **********
-changed: [Maceri1-1]
 changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 TASK [mysql : Ensure /etc/cron.d/mysql-backup file is created] *****************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpy6k64xdo/mysql.backup.cron.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpv9z_qz6l/mysql.backup.cron.j2
 @@ -0,0 +1 @@
 +
 
 changed: [Maceri1-1]
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp8zvjlf2m/mysql.backup.cron.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmppfegn22u/mysql.backup.cron.j2
 @@ -0,0 +1,3 @@
 +5 20 * * *  backup  mysqldump agama > /home/backup/mysql/agama.sql
 +10 20 * * 0 backup duplicity --no-encryption full /home/backup/mysql/ rsync://Maceri1@backup.hannibal.io/mysql
@@ -1237,27 +1239,27 @@ changed: [Maceri1-1]
 
 TASK [mysql : Copy MySQL configuration] ****************************************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp1stavp3l/override.cnf.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp6aqwcodo/override.cnf.j2
 @@ -0,0 +1,5 @@
 +[mysqld]
 +log-bin = /var/log/mysql/mysql-bin.log
 +relay-log = /var/log/mysql/mysql-relay.log
 +replicate-do-db = agama
-+server-id = 100
-\ No newline at end of file
-
-changed: [Maceri1-1]
---- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmps6luqp5l/override.cnf.j2
-@@ -0,0 +1,5 @@
-+[mysqld]
-+log-bin = /var/log/mysql/mysql-bin.log
-+relay-log = /var/log/mysql/mysql-relay.log
-+replicate-do-db = agama
-+server-id = 113
++server-id = 155
 \ No newline at end of file
 
 changed: [Maceri1-2]
+--- before
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp3h7jv9b0/override.cnf.j2
+@@ -0,0 +1,5 @@
++[mysqld]
++log-bin = /var/log/mysql/mysql-bin.log
++relay-log = /var/log/mysql/mysql-relay.log
++replicate-do-db = agama
++server-id = 76
+\ No newline at end of file
+
+changed: [Maceri1-1]
 
 TASK [mysql : Set MySQL read only mode] ****************************************
 changed: [Maceri1-1]
@@ -1268,10 +1270,11 @@ included: cname for Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
 changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 RUNNING HANDLER [mysql : Restart MySQL] ****************************************
-changed: [Maceri1-2]
 changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 RUNNING HANDLER [mysql : Reset MySQL source] ***********************************
 skipping: [Maceri1-2] => (item=stopreplica) 
@@ -1338,7 +1341,7 @@ changed: [Maceri1-3]
 
 TASK [influxdb : Import Influxdb Stat Expo Template] ***************************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpxgn313g4/inf_stat_expo.service.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpsjef5by4/inf_stat_expo.service.j2
 @@ -0,0 +1,11 @@
 +[Unit]
 +Description=Prometheus InfluxDB Statistic Exporter
@@ -1357,7 +1360,7 @@ changed: [Maceri1-3]
 
 TASK [influxdb : Import Influxdb Conf Template] ********************************
 --- before: /etc/influxdb/influxdb.conf
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp_uhtay8u/influxdb.conf.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpjtctabxx/influxdb.conf.j2
 @@ -1,596 +1,10 @@
 -### Welcome to the InfluxDB configuration file.
 -
@@ -1994,7 +1997,7 @@ changed: [Maceri1-3]
 
 TASK [influxdb : Ensure /etc/cron.d/influxdb-backup file is created] ***********
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpgh7aa1nx/influxdb-backup.cron.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpesc4ckwu/influxdb-backup.cron.j2
 @@ -0,0 +1,3 @@
 +20 20 * * * backup rm -rf /home/backup/influxdb/*; influxd backup -portable -db telegraf /home/backup/influxdb
 +25 20 * * 0 backup duplicity --no-encryption full /home/backup/influxdb/ rsync://Maceri1@backup.hannibal.io/influxdb
@@ -2055,12 +2058,12 @@ The following NEW packages will be installed:
 changed: [Maceri1-2]
 
 TASK [keepalived : Create user keepalived script] ******************************
-changed: [Maceri1-1]
 changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 TASK [keepalived : Move Keepalived script] *************************************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp9dtuiw69/keepalived_script.sh
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpxle6_iw0/keepalived_script.sh
 @@ -0,0 +1,2 @@
 +#!/bin/bash
 +ss -ntl | grep -q ':88 '
@@ -2068,7 +2071,7 @@ TASK [keepalived : Move Keepalived script] *************************************
 
 changed: [Maceri1-1]
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpooh55jb4/keepalived_script.sh
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp6rkg_3bk/keepalived_script.sh
 @@ -0,0 +1,2 @@
 +#!/bin/bash
 +ss -ntl | grep -q ':88 '
@@ -2081,20 +2084,20 @@ changed: [Maceri1-2]
 changed: [Maceri1-1]
 
 TASK [keepalived : Make sure Keepalaived is running] ***************************
-changed: [Maceri1-2]
 changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 TASK [keepalived : Download Keepalive exporter package] ************************
-changed: [Maceri1-2]
 changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 TASK [keepalived : Install Keepalived exporter package] ************************
-changed: [Maceri1-1]
 changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 TASK [keepalived : Move Keepalived-exporter service] ***************************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpw51lztt9/keepalived-exporter.service
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp_7gms31h/keepalived-exporter.service
 @@ -0,0 +1,11 @@
 +[Unit]
 +Description=Keepalived Exporter
@@ -2111,7 +2114,7 @@ TASK [keepalived : Move Keepalived-exporter service] ***************************
 
 changed: [Maceri1-2]
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpvji6poa2/keepalived-exporter.service
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp418y_3y6/keepalived-exporter.service
 @@ -0,0 +1,11 @@
 +[Unit]
 +Description=Keepalived Exporter
@@ -2129,8 +2132,8 @@ changed: [Maceri1-2]
 changed: [Maceri1-1]
 
 TASK [keepalived : Start Keepalived-exporter service] **************************
-changed: [Maceri1-2]
 changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 RUNNING HANDLER [keepalived : Restart Keepalived] ******************************
 changed: [Maceri1-1]
@@ -2162,94 +2165,7 @@ changed: [Maceri1-2]
 
 TASK [haproxy : Move Haproxy template] *****************************************
 --- before: /etc/haproxy/haproxy.cfg
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpih48te8p/haproxy.cnf.j2
-@@ -1,34 +1,53 @@
-+
- global
--	log /dev/log	local0
--	log /dev/log	local1 notice
--	chroot /var/lib/haproxy
--	stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
--	stats timeout 30s
--	user haproxy
--	group haproxy
--	daemon
-+    log /dev/log    local0
-+    log /dev/log    local1 notice
-+    chroot /var/lib/haproxy
-+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
-+    stats timeout 30s
-+    user haproxy
-+    group haproxy
-+    daemon
- 
--	# Default SSL material locations
--	ca-base /etc/ssl/certs
--	crt-base /etc/ssl/private
-+    # Default SSL material locations
-+    ca-base /etc/ssl/certs
-+    crt-base /etc/ssl/private
- 
--	# See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
--        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
--        ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
--        ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
-+    # See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&co>
-+    ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-S>
-+    ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:T>
-+    ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
- 
- defaults
--	log	global
--	mode	http
--	option	httplog
--	option	dontlognull
--        timeout connect 5000
--        timeout client  50000
--        timeout server  50000
--	errorfile 400 /etc/haproxy/errors/400.http
--	errorfile 403 /etc/haproxy/errors/403.http
--	errorfile 408 /etc/haproxy/errors/408.http
--	errorfile 500 /etc/haproxy/errors/500.http
--	errorfile 502 /etc/haproxy/errors/502.http
--	errorfile 503 /etc/haproxy/errors/503.http
--	errorfile 504 /etc/haproxy/errors/504.http
-+    log     global
-+    mode    http
-+    option  httplog 
-+    option  dontlognull
-+    timeout connect 5000
-+    timeout client  50000
-+    timeout server  50000
-+    errorfile 400 /etc/haproxy/errors/400.http
-+    errorfile 403 /etc/haproxy/errors/403.http
-+    errorfile 408 /etc/haproxy/errors/408.http
-+    errorfile 500 /etc/haproxy/errors/500.http
-+    errorfile 502 /etc/haproxy/errors/502.http
-+    errorfile 503 /etc/haproxy/errors/503.http
-+    errorfile 504 /etc/haproxy/errors/504.http
-+
-+frontend my_ha_frontend
-+    bind :88
-+    default_backend my_ha_backend
-+
-+backend my_ha_backend
-+        server Maceri1-1-0 Maceri1-1:8001 check
-+    server Maceri1-2-0 Maceri1-2:8001 check
-+        server Maceri1-1-1 Maceri1-1:8002 check
-+    server Maceri1-2-1 Maceri1-2:8002 check
-+        server Maceri1-1-2 Maceri1-1:8003 check
-+    server Maceri1-2-2 Maceri1-2:8003 check
-+    
-+listen stats
-+    bind *:9188
-+    stats enable
-+    stats uri /monitor
-+    stats refresh 5s
-
-changed: [Maceri1-1]
---- before: /etc/haproxy/haproxy.cfg
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp47lq2a47/haproxy.cnf.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmppjrmhf22/haproxy.cnf.j2
 @@ -1,34 +1,53 @@
 +
  global
@@ -2335,6 +2251,93 @@ changed: [Maceri1-1]
 +    stats refresh 5s
 
 changed: [Maceri1-2]
+--- before: /etc/haproxy/haproxy.cfg
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpxzvtcvvz/haproxy.cnf.j2
+@@ -1,34 +1,53 @@
++
+ global
+-	log /dev/log	local0
+-	log /dev/log	local1 notice
+-	chroot /var/lib/haproxy
+-	stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+-	stats timeout 30s
+-	user haproxy
+-	group haproxy
+-	daemon
++    log /dev/log    local0
++    log /dev/log    local1 notice
++    chroot /var/lib/haproxy
++    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
++    stats timeout 30s
++    user haproxy
++    group haproxy
++    daemon
+ 
+-	# Default SSL material locations
+-	ca-base /etc/ssl/certs
+-	crt-base /etc/ssl/private
++    # Default SSL material locations
++    ca-base /etc/ssl/certs
++    crt-base /etc/ssl/private
+ 
+-	# See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
+-        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+-        ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+-        ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
++    # See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&co>
++    ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-S>
++    ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:T>
++    ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
+ 
+ defaults
+-	log	global
+-	mode	http
+-	option	httplog
+-	option	dontlognull
+-        timeout connect 5000
+-        timeout client  50000
+-        timeout server  50000
+-	errorfile 400 /etc/haproxy/errors/400.http
+-	errorfile 403 /etc/haproxy/errors/403.http
+-	errorfile 408 /etc/haproxy/errors/408.http
+-	errorfile 500 /etc/haproxy/errors/500.http
+-	errorfile 502 /etc/haproxy/errors/502.http
+-	errorfile 503 /etc/haproxy/errors/503.http
+-	errorfile 504 /etc/haproxy/errors/504.http
++    log     global
++    mode    http
++    option  httplog 
++    option  dontlognull
++    timeout connect 5000
++    timeout client  50000
++    timeout server  50000
++    errorfile 400 /etc/haproxy/errors/400.http
++    errorfile 403 /etc/haproxy/errors/403.http
++    errorfile 408 /etc/haproxy/errors/408.http
++    errorfile 500 /etc/haproxy/errors/500.http
++    errorfile 502 /etc/haproxy/errors/502.http
++    errorfile 503 /etc/haproxy/errors/503.http
++    errorfile 504 /etc/haproxy/errors/504.http
++
++frontend my_ha_frontend
++    bind :88
++    default_backend my_ha_backend
++
++backend my_ha_backend
++        server Maceri1-1-0 Maceri1-1:8001 check
++    server Maceri1-2-0 Maceri1-2:8001 check
++        server Maceri1-1-1 Maceri1-1:8002 check
++    server Maceri1-2-1 Maceri1-2:8002 check
++        server Maceri1-1-2 Maceri1-1:8003 check
++    server Maceri1-2-2 Maceri1-2:8003 check
++    
++listen stats
++    bind *:9188
++    stats enable
++    stats uri /monitor
++    stats refresh 5s
+
+changed: [Maceri1-1]
 
 TASK [haproxy : Install Prometheus Haproxy Exporter] ***************************
 The following NEW packages will be installed:
@@ -2348,7 +2351,7 @@ changed: [Maceri1-1]
 
 TASK [haproxy : Move args template] ********************************************
 --- before: /etc/default/prometheus-haproxy-exporter
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp2c1224zl/haproxy_exporter.conf.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp_f4o0q19/haproxy_exporter.conf.j2
 @@ -1,35 +1 @@
 -# Set the command-line arguments to pass to the server.
 -# Due to shell scaping, to pass backslashes for regexes, you need to double
@@ -2390,7 +2393,7 @@ TASK [haproxy : Move args template] ********************************************
 
 changed: [Maceri1-2]
 --- before: /etc/default/prometheus-haproxy-exporter
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmporkvkp8l/haproxy_exporter.conf.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpfek9ov5d/haproxy_exporter.conf.j2
 @@ -1,35 +1 @@
 -# Set the command-line arguments to pass to the server.
 -# Due to shell scaping, to pass backslashes for regexes, you need to double
@@ -2433,8 +2436,8 @@ changed: [Maceri1-2]
 changed: [Maceri1-1]
 
 TASK [haproxy : Ensure haproxy is running] *************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [haproxy : Ensure haproxy exporter is running] ****************************
 ok: [Maceri1-1]
@@ -2444,11 +2447,12 @@ TASK [Assign Cname for Haproxy] ************************************************
 included: cname for Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
+changed: [Maceri1-2]
 changed: [Maceri1-1]
 
 RUNNING HANDLER [haproxy : Restart Haproxy] ************************************
-changed: [Maceri1-2]
 changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 RUNNING HANDLER [haproxy : Restart Haproxy Exporter] ***************************
 changed: [Maceri1-1]
@@ -2469,7 +2473,7 @@ Suggested packages:
 The following NEW packages will be installed:
   bridge-utils containerd dnsmasq-base docker.io pigz runc ubuntu-fan
 0 upgraded, 7 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-1]
+changed: [Maceri1-2]
 The following additional packages will be installed:
   bridge-utils containerd dnsmasq-base pigz runc ubuntu-fan
 Suggested packages:
@@ -2478,7 +2482,7 @@ Suggested packages:
 The following NEW packages will be installed:
   bridge-utils containerd dnsmasq-base docker.io pigz runc ubuntu-fan
 0 upgraded, 7 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 TASK [docker : Install Python Docker library] **********************************
 The following additional packages will be installed:
@@ -2514,7 +2518,7 @@ The following NEW packages will be installed:
   libnginx-mod-mail libnginx-mod-stream libnginx-mod-stream-geoip2 libtiff5
   libwebp7 libxpm4 nginx nginx-common nginx-core
 0 upgraded, 20 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-2]
+changed: [Maceri1-1]
 The following additional packages will be installed:
   fontconfig-config fonts-dejavu-core libdeflate0 libfontconfig1 libgd3
   libjbig0 libjpeg-turbo8 libjpeg8 libnginx-mod-http-geoip2
@@ -2530,11 +2534,11 @@ The following NEW packages will be installed:
   libnginx-mod-mail libnginx-mod-stream libnginx-mod-stream-geoip2 libtiff5
   libwebp7 libxpm4 nginx nginx-common nginx-core
 0 upgraded, 20 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 TASK [nginx : Copy Nginx configuration for uWSGI frontend] *********************
 --- before: /etc/nginx/sites-enabled/default
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpby1nhlot/default.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmp1p4pqptc/default.j2
 @@ -1,91 +1,19 @@
 -##
 -# You should look at the following URL's in order to grasp a solid understanding
@@ -2648,7 +2652,7 @@ TASK [nginx : Copy Nginx configuration for uWSGI frontend] *********************
 
 changed: [Maceri1-1]
 --- before: /etc/nginx/sites-enabled/default
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpevg8kis2/default.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmppw5084mw/default.j2
 @@ -1,91 +1,19 @@
 -##
 -# You should look at the following URL's in order to grasp a solid understanding
@@ -2763,26 +2767,26 @@ changed: [Maceri1-1]
 changed: [Maceri1-2]
 
 TASK [nginx : Ensure Nginx is started and enabled on boot] *********************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [nginx : Flush handlers to ensure Nginx is restarted before installing the exporter] ***
 
 TASK [nginx : Flush handlers to ensure Nginx is restarted before installing the exporter] ***
 
 RUNNING HANDLER [nginx : Restart Nginx] ****************************************
-changed: [Maceri1-2]
 changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 TASK [nginx : Install Nginx exporter] ******************************************
 The following NEW packages will be installed:
   prometheus-nginx-exporter
 0 upgraded, 1 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-1]
+changed: [Maceri1-2]
 The following NEW packages will be installed:
   prometheus-nginx-exporter
 0 upgraded, 1 newly installed, 0 to remove and 129 not upgraded.
-changed: [Maceri1-2]
+changed: [Maceri1-1]
 
 TASK [nginx : Ensure Prometheus-nginx-exporter is started and enabled on boot] ***
 ok: [Maceri1-2]
@@ -2811,10 +2815,10 @@ changed: [Maceri1-1]
 changed: [Maceri1-2]
 
 TASK [agama : Download Agama files] ********************************************
-changed: [Maceri1-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/agama.py', 'dest': '/opt/agama/agama.py'})
 changed: [Maceri1-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/agama.py', 'dest': '/opt/agama/agama.py'})
-changed: [Maceri1-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile', 'dest': '/opt/agama/Dockerfile'})
+changed: [Maceri1-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/agama.py', 'dest': '/opt/agama/agama.py'})
 changed: [Maceri1-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile', 'dest': '/opt/agama/Dockerfile'})
+changed: [Maceri1-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile', 'dest': '/opt/agama/Dockerfile'})
 
 TASK [agama : Build Agama Docker image] ****************************************
 changed: [Maceri1-2]
@@ -2823,18 +2827,19 @@ changed: [Maceri1-1]
 TASK [agama : Start Agama container] *******************************************
 changed: [Maceri1-1] => (item=None)
 changed: [Maceri1-2] => (item=None)
-changed: [Maceri1-2] => (item=None)
 changed: [Maceri1-1] => (item=None)
 changed: [Maceri1-2] => (item=None)
-changed: [Maceri1-2]
 changed: [Maceri1-1] => (item=None)
 changed: [Maceri1-1]
+changed: [Maceri1-2] => (item=None)
+changed: [Maceri1-2]
 
 TASK [Assign Cname for Agama] **************************************************
 included: cname for Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
 changed: [Maceri1-1]
+changed: [Maceri1-2]
 
 PLAY [Grafana server] **********************************************************
 
@@ -6605,7 +6610,7 @@ changed: [Maceri1-3]
 
 TASK [grafana : Move template dashboards] **************************************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp2bpbtuls/my_dashboards.yaml.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpclouzl5k/my_dashboards.yaml.j2
 @@ -0,0 +1,11 @@
 +apiVersion: 1
 +
@@ -6624,7 +6629,7 @@ changed: [Maceri1-3]
 
 TASK [grafana : Move template datasources] *************************************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmpa9kuzk6i/my_datasources.yaml.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpra0g8n65/my_datasources.yaml.j2
 @@ -0,0 +1,30 @@
 +apiVersion: 1
 +datasources:
@@ -6710,8 +6715,8 @@ changed: [Maceri1-3]
 
 TASK [agama_client : Place agama-client script] ********************************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp9e2fx_ch/agama-client.j2
-@@ -0,0 +1,67 @@
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpx8xt0zuj/agama-client.j2
+@@ -0,0 +1,70 @@
 +#!/bin/bash -eu
 +
 +# Please help Dora to find problems in this script
@@ -6731,12 +6736,15 @@ TASK [agama_client : Place agama-client script] ********************************
 +db_name=$(grep "^database_name=" /etc/agama-client/agama-client.conf | sed 's/^.*=//')
 +subnet=$(grep "^subnet=" /etc/agama-client/agama-client.conf | sed 's/^.*=//')
 +
-+if $(curl -s "$db_url/ping"); then
-+    logger "Will push data to $db_url"
-+else
-+    logger "Failed to connect to $db_url"
-+    exit 1
-+fi
++for i in {1..30}; do
++    if $(curl -s "$db_url/ping"); then
++        logger "Will push data to $db_url"
++        break
++    else
++        logger "Failed to connect to $db_url. InfluxDB is not running? ($i)"
++        sleep 5
++    fi
++done
 +
 +logger "Creating database $db_name in $db_url"
 +curl -i -XPOST "$db_url/query" --data-urlencode "q=CREATE DATABASE $db_name" 1>/dev/null 2>/dev/null || { logger "$0 Failed to create database"; exit 1; }
@@ -6797,7 +6805,7 @@ changed: [Maceri1-3]
 
 TASK [agama_client : Place agama-client config] ********************************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmplsc6mc9v/agama-client.conf.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpq4wo13ex/agama-client.conf.j2
 @@ -0,0 +1,3 @@
 +database_url=http://influxdb:8086
 +database_name=agama_client_db
@@ -6808,7 +6816,7 @@ changed: [Maceri1-3]
 
 TASK [agama_client : Create agama-client systemd service] **********************
 --- before
-+++ after: /home/hannibal/.ansible/tmp/ansible-local-237900yb5y3lf2/tmp75tmpy00/agama-client.service.j2
++++ after: /home/hannibal/.ansible/tmp/ansible-local-274751zhrovkee/tmpu9sqouww/agama-client.service.j2
 @@ -0,0 +1,11 @@
 +[Unit]
 +Description=Agama Client Service
@@ -6835,8 +6843,8 @@ RUNNING HANDLER [agama_client : Reload systemd] ********************************
 ok: [Maceri1-3]
 
 PLAY RECAP *********************************************************************
-Maceri1-1                  : ok=92   changed=69   unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
-Maceri1-2                  : ok=89   changed=66   unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+Maceri1-1                  : ok=93   changed=70   unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+Maceri1-2                  : ok=93   changed=70   unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
 Maceri1-3                  : ok=97   changed=69   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
 
@@ -6868,39 +6876,39 @@ ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [init : Install Prometheus Node Exporter] *********************************
+ok: [Maceri1-1]
 ok: [Maceri1-3]
 ok: [Maceri1-2]
-ok: [Maceri1-1]
 
 TASK [init : Ensure Node Exporter is running] **********************************
-ok: [Maceri1-3]
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
+ok: [Maceri1-3]
 
 TASK [init : Install Rsyslog] **************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 ok: [Maceri1-3]
 
 TASK [init : Ensure that Rsyslog is running] ***********************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 ok: [Maceri1-3]
 
 TASK [init : Configure rsyslog to send logs to Telegraf] ***********************
-ok: [Maceri1-3]
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
+ok: [Maceri1-3]
 
 TASK [init : Create backup user] ***********************************************
-ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-3]
 ok: [Maceri1-2]
 
 TASK [init : Add backup server SSH key to known hosts] *************************
-ok: [Maceri1-3]
 ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-3]
 
 TASK [init : Ensure /home/backup/restore directory is created] *****************
 ok: [Maceri1-2]
@@ -6915,25 +6923,25 @@ ok: [Maceri1-3]
 PLAY [DNS servers] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [Maceri1-3]
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
+ok: [Maceri1-3]
 
 TASK [bind : Install Bind9] ****************************************************
-ok: [Maceri1-3]
 ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-3]
 
 TASK [bind : Generate Bind9 config] ********************************************
-ok: [Maceri1-3] => (item=None)
 ok: [Maceri1-1] => (item=None)
 ok: [Maceri1-2] => (item=None)
 ok: [Maceri1-3] => (item=None)
-ok: [Maceri1-3]
 ok: [Maceri1-1] => (item=None)
 ok: [Maceri1-1]
 ok: [Maceri1-2] => (item=None)
 ok: [Maceri1-2]
+ok: [Maceri1-3] => (item=None)
+ok: [Maceri1-3]
 
 TASK [bind : Create master zone file] ******************************************
 skipping: [Maceri1-1]
@@ -6946,34 +6954,34 @@ skipping: [Maceri1-2]
 ok: [Maceri1-3]
 
 TASK [bind : install dependency for nsupdate] **********************************
-ok: [Maceri1-3]
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
+ok: [Maceri1-3]
 
 TASK [bind : Extract Bind9 exporter] *******************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 ok: [Maceri1-3]
 
 TASK [bind : Create symlink to Bind9 exporter executable] **********************
 ok: [Maceri1-1]
-ok: [Maceri1-2]
 ok: [Maceri1-3]
+ok: [Maceri1-2]
 
 TASK [bind : Create Bind9 exporter systemd service file] ***********************
-ok: [Maceri1-3]
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
+ok: [Maceri1-3]
 
 TASK [bind : Reload systemd daemon] ********************************************
-ok: [Maceri1-2]
-ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-3]
+ok: [Maceri1-2]
 
 TASK [bind : Ensure Bind9 exporter is started and enabled] *********************
-ok: [Maceri1-3]
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
+ok: [Maceri1-3]
 
 TASK [bind : flush] ************************************************************
 
@@ -6996,22 +7004,24 @@ included: cname for Maceri1-3, Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
 ok: [Maceri1-3]
+ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 PLAY [Resolver] ****************************************************************
 
 TASK [Gathering Facts] *********************************************************
 ok: [Maceri1-1]
-ok: [Maceri1-2]
 ok: [Maceri1-3]
+ok: [Maceri1-2]
 
 TASK [resolver : Update resolv.conf] *******************************************
+ok: [Maceri1-1]
 ok: [Maceri1-2]
 ok: [Maceri1-3]
-ok: [Maceri1-1]
 
 TASK [resolver : Systemd-resolved is shutdown] *********************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 ok: [Maceri1-3]
 
 PLAY [Prometheus server] *******************************************************
@@ -7057,44 +7067,44 @@ ok: [Maceri1-3]
 PLAY [Database server] *********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Install MySQL server] ********************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Ensure MySQL service is running] *********************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Create MySQL override config to allow external connections] ******
 ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [mysql : Install PyMySQL library] *****************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : MySQL database] **************************************************
 ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [mysql : Create MySQL user] ***********************************************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [mysql : Create MySQL exporter system user] *******************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Create .my.cnf for MySQL exporter] *******************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Install MySQL exporter] ******************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Flush handlers to ensure MySQL is restarted before starting the exporter] ***
 
@@ -7105,20 +7115,20 @@ ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [mysql : Ensure /home/backup/mysql directory is created] ******************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [mysql : Create MySQL backup user] ****************************************
 ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [mysql : Create MySQL client configuration file for backup user] **********
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Ensure /etc/cron.d/mysql-backup file is created] *****************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Create replication user] *****************************************
 ok: [Maceri1-1]
@@ -7137,6 +7147,7 @@ included: cname for Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 PLAY [InfluxDB server] *********************************************************
 
@@ -7196,16 +7207,16 @@ ok: [Maceri1-3]
 PLAY [Keepalived] **************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [keepalived : Make keepalived directory] **********************************
 ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [keepalived : Install keepalived] *****************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [keepalived : Create user keepalived script] ******************************
 ok: [Maceri1-1]
@@ -7220,8 +7231,8 @@ ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [keepalived : Make sure Keepalaived is running] ***************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [keepalived : Download Keepalive exporter package] ************************
 ok: [Maceri1-1]
@@ -7236,18 +7247,18 @@ ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [keepalived : Start Keepalived-exporter service] **************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 PLAY [Haproxy] *****************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [haproxy : Install Haproxy] ***********************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [haproxy : Move Haproxy template] *****************************************
 ok: [Maceri1-1]
@@ -7266,14 +7277,15 @@ ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [haproxy : Ensure haproxy exporter is running] ****************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [Assign Cname for Haproxy] ************************************************
 included: cname for Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 PLAY [Web server] **************************************************************
 
@@ -7282,36 +7294,36 @@ ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [docker : Install Docker] *************************************************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [docker : Install Python Docker library] **********************************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [docker : Ensure Docker is started and enabled] ***************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [nginx : Install Nginx] ***************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [nginx : Copy Nginx configuration for uWSGI frontend] *********************
 ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [nginx : Ensure Nginx is started and enabled on boot] *********************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [nginx : Flush handlers to ensure Nginx is restarted before installing the exporter] ***
 
 TASK [nginx : Flush handlers to ensure Nginx is restarted before installing the exporter] ***
 
 TASK [nginx : Install Nginx exporter] ******************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [nginx : Ensure Prometheus-nginx-exporter is started and enabled on boot] ***
 ok: [Maceri1-1]
@@ -7328,23 +7340,24 @@ ok: [Maceri1-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/ag
 ok: [Maceri1-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile', 'dest': '/opt/agama/Dockerfile'})
 
 TASK [agama : Build Agama Docker image] ****************************************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [agama : Start Agama container] *******************************************
 ok: [Maceri1-2] => (item=None)
 ok: [Maceri1-1] => (item=None)
-ok: [Maceri1-2] => (item=None)
 ok: [Maceri1-1] => (item=None)
 ok: [Maceri1-2] => (item=None)
-ok: [Maceri1-2]
 ok: [Maceri1-1] => (item=None)
 ok: [Maceri1-1]
+ok: [Maceri1-2] => (item=None)
+ok: [Maceri1-2]
 
 TASK [Assign Cname for Agama] **************************************************
 included: cname for Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
+ok: [Maceri1-2]
 ok: [Maceri1-1]
 
 PLAY [Grafana server] **********************************************************
@@ -7439,23 +7452,23 @@ TASK [agama_client : Ensure agama-client service is started and enabled] *******
 ok: [Maceri1-3]
 
 PLAY RECAP *********************************************************************
-Maceri1-1                  : ok=80   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
-Maceri1-2                  : ok=77   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+Maceri1-1                  : ok=81   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+Maceri1-2                  : ok=81   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
 Maceri1-3                  : ok=86   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
 Maceri1-3 | CHANGED => {
     "changed": true,
-    "elapsed": 31,
+    "elapsed": 34,
     "rebooted": true
 }
 Maceri1-2 | CHANGED => {
     "changed": true,
-    "elapsed": 37,
+    "elapsed": 41,
     "rebooted": true
 }
 Maceri1-1 | CHANGED => {
     "changed": true,
-    "elapsed": 38,
+    "elapsed": 42,
     "rebooted": true
 }
 
@@ -7482,70 +7495,70 @@ ok: [Maceri1-1]
 ok: [Maceri1-3]
 
 TASK [init : Update APT cache] *************************************************
-ok: [Maceri1-1]
 ok: [Maceri1-3]
+ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [init : Install Prometheus Node Exporter] *********************************
-ok: [Maceri1-2]
 ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [init : Ensure Node Exporter is running] **********************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
 ok: [Maceri1-3]
+ok: [Maceri1-2]
 
 TASK [init : Install Rsyslog] **************************************************
-ok: [Maceri1-2]
-ok: [Maceri1-1]
 ok: [Maceri1-3]
+ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [init : Ensure that Rsyslog is running] ***********************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
 ok: [Maceri1-3]
+ok: [Maceri1-2]
 
 TASK [init : Configure rsyslog to send logs to Telegraf] ***********************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 ok: [Maceri1-3]
 
 TASK [init : Create backup user] ***********************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
 ok: [Maceri1-3]
+ok: [Maceri1-2]
 
 TASK [init : Add backup server SSH key to known hosts] *************************
-ok: [Maceri1-2]
-ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-3]
+ok: [Maceri1-2]
 
 TASK [init : Ensure /home/backup/restore directory is created] *****************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 ok: [Maceri1-3]
 
 TASK [init : Install Duplicity] ************************************************
+ok: [Maceri1-1]
 ok: [Maceri1-2]
 ok: [Maceri1-3]
-ok: [Maceri1-1]
 
 PLAY [DNS servers] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [bind : Install Bind9] ****************************************************
-ok: [Maceri1-2]
-ok: [Maceri1-1]
 ok: [Maceri1-3]
+ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [bind : Generate Bind9 config] ********************************************
-ok: [Maceri1-2] => (item=None)
 ok: [Maceri1-1] => (item=None)
+ok: [Maceri1-2] => (item=None)
 ok: [Maceri1-3] => (item=None)
 ok: [Maceri1-2] => (item=None)
 ok: [Maceri1-2]
@@ -7565,18 +7578,18 @@ skipping: [Maceri1-2]
 ok: [Maceri1-3]
 
 TASK [bind : install dependency for nsupdate] **********************************
-ok: [Maceri1-2]
 ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [bind : Extract Bind9 exporter] *******************************************
 ok: [Maceri1-3]
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [bind : Create symlink to Bind9 exporter executable] **********************
-ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-3]
 ok: [Maceri1-2]
 
 TASK [bind : Create Bind9 exporter systemd service file] ***********************
@@ -7590,9 +7603,9 @@ ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [bind : Ensure Bind9 exporter is started and enabled] *********************
-ok: [Maceri1-2]
 ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [bind : flush] ************************************************************
 
@@ -7615,23 +7628,25 @@ included: cname for Maceri1-3, Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
 ok: [Maceri1-3]
+ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 PLAY [Resolver] ****************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [resolver : Update resolv.conf] *******************************************
-ok: [Maceri1-2]
-ok: [Maceri1-3]
 ok: [Maceri1-1]
+ok: [Maceri1-3]
+ok: [Maceri1-2]
 
 TASK [resolver : Systemd-resolved is shutdown] *********************************
-ok: [Maceri1-3]
 ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-3]
 
 PLAY [Prometheus server] *******************************************************
 
@@ -7663,7 +7678,7 @@ TASK [nginx : Copy Nginx configuration for uWSGI frontend] *********************
 ok: [Maceri1-3]
 
 TASK [nginx : Ensure Nginx is started and enabled on boot] *********************
-ok: [Maceri1-3]
+changed: [Maceri1-3]
 
 TASK [nginx : Flush handlers to ensure Nginx is restarted before installing the exporter] ***
 
@@ -7671,25 +7686,25 @@ TASK [nginx : Install Nginx exporter] ******************************************
 ok: [Maceri1-3]
 
 TASK [nginx : Ensure Prometheus-nginx-exporter is started and enabled on boot] ***
-ok: [Maceri1-3]
+changed: [Maceri1-3]
 
 PLAY [Database server] *********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Install MySQL server] ********************************************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [mysql : Ensure MySQL service is running] *********************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Create MySQL override config to allow external connections] ******
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [mysql : Install PyMySQL library] *****************************************
 ok: [Maceri1-2]
@@ -7700,16 +7715,16 @@ ok: [Maceri1-2]
 ok: [Maceri1-1]
 
 TASK [mysql : Create MySQL user] ***********************************************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [mysql : Create MySQL exporter system user] *******************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Create .my.cnf for MySQL exporter] *******************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Install MySQL exporter] ******************************************
 ok: [Maceri1-1]
@@ -7728,8 +7743,8 @@ ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [mysql : Create MySQL backup user] ****************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Create MySQL client configuration file for backup user] **********
 ok: [Maceri1-2]
@@ -7740,22 +7755,23 @@ ok: [Maceri1-2]
 ok: [Maceri1-1]
 
 TASK [mysql : Create replication user] *****************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [mysql : Copy MySQL configuration] ****************************************
 ok: [Maceri1-2]
 ok: [Maceri1-1]
 
 TASK [mysql : Set MySQL read only mode] ****************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [Assign Cnames to MySQL] **************************************************
 included: cname for Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 PLAY [InfluxDB server] *********************************************************
 
@@ -7815,48 +7831,48 @@ ok: [Maceri1-3]
 PLAY [Keepalived] **************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [keepalived : Make keepalived directory] **********************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [keepalived : Install keepalived] *****************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [keepalived : Create user keepalived script] ******************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [keepalived : Move Keepalived script] *************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [keepalived : Move Keepalived template] ***********************************
 ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [keepalived : Make sure Keepalaived is running] ***************************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [keepalived : Download Keepalive exporter package] ************************
 ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [keepalived : Install Keepalived exporter package] ************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [keepalived : Move Keepalived-exporter service] ***************************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [keepalived : Start Keepalived-exporter service] **************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 PLAY [Haproxy] *****************************************************************
 
@@ -7865,64 +7881,65 @@ ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [haproxy : Install Haproxy] ***********************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [haproxy : Move Haproxy template] *****************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [haproxy : Install Prometheus Haproxy Exporter] ***************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [haproxy : Move args template] ********************************************
 ok: [Maceri1-2]
 ok: [Maceri1-1]
 
 TASK [haproxy : Ensure haproxy is running] *************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [haproxy : Ensure haproxy exporter is running] ****************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [Assign Cname for Haproxy] ************************************************
 included: cname for Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 PLAY [Web server] **************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [docker : Install Docker] *************************************************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [docker : Install Python Docker library] **********************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [docker : Ensure Docker is started and enabled] ***************************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [nginx : Install Nginx] ***************************************************
 ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [nginx : Copy Nginx configuration for uWSGI frontend] *********************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [nginx : Ensure Nginx is started and enabled on boot] *********************
-ok: [Maceri1-2]
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 TASK [nginx : Flush handlers to ensure Nginx is restarted before installing the exporter] ***
 
@@ -7941,14 +7958,14 @@ ok: [Maceri1-1]
 ok: [Maceri1-2]
 
 TASK [agama : Download Agama files] ********************************************
-ok: [Maceri1-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/agama.py', 'dest': '/opt/agama/agama.py'})
 ok: [Maceri1-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/agama.py', 'dest': '/opt/agama/agama.py'})
-ok: [Maceri1-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile', 'dest': '/opt/agama/Dockerfile'})
+ok: [Maceri1-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/agama.py', 'dest': '/opt/agama/agama.py'})
 ok: [Maceri1-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile', 'dest': '/opt/agama/Dockerfile'})
+ok: [Maceri1-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile', 'dest': '/opt/agama/Dockerfile'})
 
 TASK [agama : Build Agama Docker image] ****************************************
-ok: [Maceri1-1]
 ok: [Maceri1-2]
+ok: [Maceri1-1]
 
 TASK [agama : Start Agama container] *******************************************
 ok: [Maceri1-2] => (item=None)
@@ -7965,6 +7982,7 @@ included: cname for Maceri1-1, Maceri1-2
 
 TASK [cname : Create CNAME records] ********************************************
 ok: [Maceri1-1]
+ok: [Maceri1-2]
 
 PLAY [Grafana server] **********************************************************
 
@@ -8058,8 +8076,8 @@ TASK [agama_client : Ensure agama-client service is started and enabled] *******
 ok: [Maceri1-3]
 
 PLAY RECAP *********************************************************************
-Maceri1-1                  : ok=80   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
-Maceri1-2                  : ok=77   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
-Maceri1-3                  : ok=86   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+Maceri1-1                  : ok=81   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+Maceri1-2                  : ok=81   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+Maceri1-3                  : ok=86   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
-Tue Dec 17 06:04:42 EET 2024
+Tue Dec 17 09:30:01 EET 2024

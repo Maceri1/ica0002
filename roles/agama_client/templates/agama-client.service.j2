@@ -4,6 +4,8 @@ Documentation=https://github.com/romankuchin/ica0002-2024/
 After=network-online.target
 
 [Service]
+Restart=on-failure
+RestartSec=5
 User=agama-client
 ExecStart=/usr/local/bin/agama-client
 
