@@ -10,4 +10,3 @@
     zone: "{{ domain_name }}"
     value: "{{ inventory_hostname }}"
   no_log: true
-  run_once: true
